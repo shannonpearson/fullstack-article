@@ -1,5 +1,7 @@
 const path = require('path');
+/* eslint-disable no-unused-vars */
 const webpack = require('webpack');
+/* eslint-enable no-unused-vars */
 
 module.exports = {
   entry: [
@@ -12,10 +14,15 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
+      {
+        test: /\.(js|jsx)$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: { presets: ['es2015', 'react'] },
+      },
     ],
     loaders: [
-       { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
     ],
   },
   resolve: {
@@ -23,5 +30,5 @@ module.exports = {
   },
   devServer: {
     port: 8080,
-  }
+  },
 };
