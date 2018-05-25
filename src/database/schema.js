@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const uri = 'mongodb://shannon:verb@ds.mongolab.com:23129/articles';
+// const uri = 'mongodb://shannon:verb@ds.mongolab.com:23129/articles';
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/articles';
 
 mongoose.connect(uri);
 

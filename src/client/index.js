@@ -6,6 +6,3 @@ import App from './App';
 /* eslint-disable react/jsx-filename-extension */
 ReactDOM.render(<App />, document.getElementById('app'));
 /* eslint-enable jsx-filename-extension */
-
-// this is a change
-// some change 

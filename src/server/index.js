@@ -14,6 +14,6 @@ app.get('/', (req, res) => { // req, res, next (took out next because not used f
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-app.listen(8000, () => {
+app.listen(process.env.PORT || 8000, () => {
   console.log('Server running on port 8000.\nKeep "yarn wds" running in an other terminal.');
 });
