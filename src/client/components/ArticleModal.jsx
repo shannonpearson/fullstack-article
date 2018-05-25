@@ -16,7 +16,9 @@ class ArticleModal extends Component {
     super(props);
     this.state = {
       show: false,
-      title: '',
+      title: this.props.currentArticle ? this.props.currentArticle.title : '',
+      author: this.props.currentArticle ? this.props.currentArticle.author : '',
+      body: this.props.currentArticle ? this.props.currentArticle.body : '',
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -35,6 +37,9 @@ class ArticleModal extends Component {
 
   handleFormChange(e) {
     console.log('passed to modal', e.target);
+    const id = e.target.id;
+    const value = e.target.value;
+    this.setState({ [id]: value }, console.log('state change', this.state));
   }
 
   saveNew() {
