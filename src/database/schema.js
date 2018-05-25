@@ -58,14 +58,14 @@ const newArticle = (article) => {
   // need to search articles again
 };
 
-const updateArticle = (article) => { // article should have all fields to UPDATE
-  Article.updateOne({ _id: articleId }, article, (err, res) => {
+const updateArticle = (articleId, changes) => { // article should have all fields to UPDATE, plus _id as id
+  Article.updateOne({ _id: articleId }, changes, (err, res) => {
     if (err) {
       console.log('error updating article', err);
     } else {
-      console.log('updated ' + res.modifiedCount + ' articles');
+      console.log(`updated ${res.modifiedCount} articles`);
     }
-  })
+  });
 };
 
 const deleteArticle = (articleId) => {
@@ -75,7 +75,7 @@ const deleteArticle = (articleId) => {
     } else {
       console.log('article deleted!');
     }
-  })
+  });
 };
 
 // instance: const article = new Article({ title: 'some string', author: 'some name string', etc. })

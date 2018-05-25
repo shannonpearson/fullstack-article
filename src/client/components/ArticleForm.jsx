@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import React from 'react';
 
 import { form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
@@ -8,19 +10,19 @@ class ArticleForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
-      author: '',
-      body: '',
+      // title: '',
+      // author: '',
+      // body: '',
     };
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(e) {
-    console.log('form change');
-    // this.setState({
-    // e.target.id: e.target.value,
-    // })
-  }
+  // handleChange(e) {
+  //   console.log('form change', e.target);
+  //   // this.setState({
+  //   // e.target.id: e.target.value,
+  //   // })
+  // }
 
   render() {
     return (
@@ -32,7 +34,7 @@ class ArticleForm extends Component {
             id="title"
             value={this.state.title}
             placeholder="enter title"
-            onChange={this.handleChange}
+            onChange={this.props.handleChange}
           />
           <ControlLabel> Author </ControlLabel>
           <FormControl
@@ -40,14 +42,14 @@ class ArticleForm extends Component {
             id="author"
             value={this.state.author}
             placeholder="who u?"
-            onChange={this.handleChange}
+            onChange={this.props.handleChange}
           />
           <ControlLabel> Article Body </ControlLabel>
           <FormControl
             type="text"
             value={this.state.body}
             placeholder="write something cool..."
-            onChange={this.onChange}
+            onChange={this.props.handleChange}
           />
         </FormGroup>
       </form>

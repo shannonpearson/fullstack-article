@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types, class-methods-use-this */
 
 import React from 'react';
 
@@ -16,15 +16,13 @@ class ArticleModal extends Component {
     super(props);
     this.state = {
       show: false,
-      title: '', // this.props.article.title...
-      author: '',
-      body: '',
-      currentArticle: null,
+      title: '',
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.saveNew = this.saveNew.bind(this);
     this.saveChange = this.saveChange.bind(this);
+    this.handleFormChange = this.handleFormChange.bind(this);
   }
 
   handleClose() {
@@ -35,8 +33,13 @@ class ArticleModal extends Component {
     this.setState({ show: true });
   }
 
+  handleFormChange(e) {
+    console.log('passed to modal', e.target);
+  }
+
   saveNew() {
     // axios request to send post request to save new article
+
   }
 
   saveChange() {
@@ -47,19 +50,19 @@ class ArticleModal extends Component {
     return (
 
       <div>
-        <Button onClick={this.handleShow}> { this.currentArticle ? 'Edit' : 'New' } </Button>
+        <Button onClick={this.handleShow}> { this.props.currentArticle ? 'Edit' : 'New' } </Button>
 
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Header closeButton>
             <Title>
-              {this.props.currentArticle ? 'Edit Article' : 'Write New Article'} 
+              {this.props.currentArticle ? 'Edit Article' : 'Write New Article'}
             </Title>
           </Header>
           <Body>
-            <ArticleForm currentArticle={this.state.currentArticle} />
+            <ArticleForm currentArticle={this.state.currentArticle} handleChange={this.handleFormChange} />
           </Body>
           <Footer>
-            <Button onClick={this.props.currentArticle ? this.saveChange : this.saveNew}> Save </Button>
+            <Button onClick={this.props.currentArticle ? this.saveChange : this.saveNew}> { this.props.currentArticle ? 'Save' : 'New' } </Button>
             <Button onClick={this.handleClose}> Cancel </Button>
             {this.props.currentArticle && (
               <Button> Delete Article </Button>

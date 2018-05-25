@@ -27,6 +27,19 @@ app.get('/all', (req, res) => {
 
 app.get('/search', (req, res) => {
   db.searchArticles(res.filter);
+  res.status(200).json({});
+});
+
+app.post('/new', (req, res) => {
+  db.newArticle(res.article);
+  res.status(200).json({});
+  db.getAllArticlesByDate();
+});
+
+// probably update urls to /article/edit, etc
+app.patch('/edit', (req, res) => {
+  db.updateArticle(res.articleId, res.changes);
+  res.status(200).json({});
 });
 
 app.listen(8000, () => {
