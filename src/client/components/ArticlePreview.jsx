@@ -1,32 +1,38 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
-import { Card } from 'antd';
-
+import { Navbar } from 'react-bootstrap';
 
 const { Component } = React;
-
-const cardStyle = {
-  border: '1px solid black',
-  width: '80%',
-  margin: '10px',
-};
+const { Header, Brand } = Navbar;
 
 class ArticlePreview extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expandView: false,
+    //   expandView: false,
     };
   }
 
   render() {
     const { article } = this.props;
     return (
-      <Card title={article.title} style={cardStyle}>
-        {article.body}
-      </Card>
+        <Navbar>
+            <Header>
+                <Brand>
+                    holla
+                </Brand>
+            </Header>
+        </Navbar>
     );
+    // (
+    //   <Card title={article.title}>
+    //     {article.body}
+    //     {article.tags.map(tag => (
+    //       <Label> <Icon name="tag" /> { tag } </Label>
+    //     ))}
+    //   </Card>
+    // );
   }
 }
 
