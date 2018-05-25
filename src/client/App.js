@@ -1,6 +1,10 @@
 /* eslint-disable */
 
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+
+import reducers from './reducers/index';
 import ArticleList from './components/ArticleList';
 
 
@@ -22,14 +26,16 @@ const sampleData = [
 ]
 
 
-
 class App extends Component {
 
   render() {
+    const store = createStore(reducers);
     return (
-      <div>
-        <ArticleList articles={sampleData} />
-      </div>
+      <Provider store={store}>
+        <div>
+          <ArticleList articles={sampleData} />
+        </div>
+      </Provider>
     )
   }
 }

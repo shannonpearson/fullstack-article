@@ -19,7 +19,7 @@ class ArticlePreview extends Component {
 
   componentDidMount() {
     axios.get('/all').then(function(response) {
-      console.log('success');
+      console.log('success response', response);
     }).catch(function(err) { console.log('error', err)});
   }
 

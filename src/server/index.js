@@ -19,7 +19,7 @@ app.get('/all', (req, res) => {
   getAllArticlesByDate((err, results) => {
     console.log('error', err);
     console.log('results', results);
-    res.send('success');
+    res.send(results);
   });
 });
 
