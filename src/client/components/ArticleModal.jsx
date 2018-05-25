@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Modal, Button } from 'react-bootstrap';
 
+import ArticleForm from './ArticleForm';
+
 const { Component } = React;
 const { Header, Title, Body, Footer } = Modal;
 
