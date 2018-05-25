@@ -28,7 +28,6 @@ class App extends Component {
   render() {
     return (
       <div>
-        smh
         <ArticleList articles={sampleData} />
       </div>
     )
