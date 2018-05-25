@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
-import { Panel, Collapse, Label } from 'react-bootstrap';
+import { Panel, Label } from 'react-bootstrap';
 
 const { Component } = React;
 const {
-  Heading, Title, Body, Footer,
+  Heading, Title, Body, Footer, Collapse,
 } = Panel;
 
 class ArticlePreview extends Component {
@@ -19,15 +19,17 @@ class ArticlePreview extends Component {
   render() {
     const { article } = this.props;
     return (
-      <Panel bsStyle="info">
+      <Panel bsStyle="info" defaultExpanded={false}>
         <Heading>
-          <Title componentClass="h3"> { article.title } </Title>
+          <Title componentClass="h3" toggle> { article.title } </Title>
         </Heading>
-        <Body> { article.body} </Body>
-        <Footer>
-          { article.tags.map(tag => (<Label key={tag} bsStyle="info" style={{ marginRight: '5' }}> {tag} </Label>))
-            }
-        </Footer>
+        <Collapse>
+          <Body> { article.body} </Body>
+          <Footer>
+            { article.tags.map(tag => (<Label key={tag} bsStyle="info" style={{ marginRight: 5 }}> {tag} </Label>))
+              }
+          </Footer>
+        </Collapse>
       </Panel>
     );
     // (
