@@ -17,9 +17,12 @@ app.get('/', (req, res) => { // req, res, next (took out next because not used f
 
 app.get('/all', (req, res) => {
   getAllArticlesByDate((err, results) => {
-    console.log('error', err);
-    console.log('results', results);
-    res.send(results);
+    if (err) {
+      console.log('error', err);
+    } else {
+      console.log('resultsssss', results);
+      res.status(200).json(results);
+    }
   });
 });
 

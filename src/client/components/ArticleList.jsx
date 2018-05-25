@@ -24,7 +24,7 @@ class ArticleList extends React.Component {
   componentWillMount() {
     axios.get('all')
       .then((response) => {
-        console.log('response', response);
+        console.log('responseeee', response);
         this.props.getArticles(null);
       })
       .catch((err) => {
@@ -34,6 +34,7 @@ class ArticleList extends React.Component {
 
   render() {
     console.log(this.props)
+    const { articles } = this.props;
     return (
       <div>
         <Navbar>
