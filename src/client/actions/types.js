@@ -1,1 +1,1 @@
-export const GET_ARTICLES = 'get_articles';
+export default 'get_articles';

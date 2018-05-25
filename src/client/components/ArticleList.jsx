@@ -25,7 +25,7 @@ class ArticleList extends React.Component {
     axios.get('all')
       .then((response) => {
         console.log('responseeee', response);
-        this.props.getArticles(null);
+        this.props.getArticles(response.data);
       })
       .catch((err) => {
         console.log('error', err);
