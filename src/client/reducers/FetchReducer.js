@@ -4,13 +4,13 @@ const INITIAL_STATE = {
   articles: [],
 };
 
-export default (state = INITIAL_STATE, action) => {
+const FetchReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_ARTICLES:
-      return Object.assign({}, state, {
-        articles: action.payload.articles,
-      });
+      return { ...state, articles: action.payload };
     default:
       return state;
   }
 };
+
+export default FetchReducer;

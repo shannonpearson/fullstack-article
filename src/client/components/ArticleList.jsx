@@ -4,9 +4,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
+import { Button } from 'react-bootstrap';
+
 import ArticlePreview from './ArticlePreview';
 import ArticleModal from './ArticleModal';
-import getArticles from '../actions/index';
+import { getArticles, addArticle } from '../actions/index';
 
 
 const article = {
@@ -26,12 +28,13 @@ class ArticleList extends React.Component {
     };
     this.filterSearch = this.filterSearch.bind(this);
     this.search = this.search.bind(this);
+    this.listProps = this.listProps.bind(this);
   }
 
   componentWillMount() {
     axios.get('all')
       .then((response) => {
-        console.log('responseeee', response);
+        console.log('responseeee', response.data);
         this.props.getArticles(response.data);
       })
       .catch((err) => {
@@ -52,13 +55,17 @@ class ArticleList extends React.Component {
     });
   }
 
+  listProps() {
+    console.log('PROPS!', this.props)
+  }
+
   render() {
-    console.log(this.props);
-    const { articles } = this.props;
+    console.log('les props', this.props);
     return (
       <div>
         <ArticleModal currentArticle={article} />
-        { articles.map(a => (<ArticlePreview key={a.title} article={a} />))}
+        <Button onClick={this.listProps}>PROPS</Button>
+        { this.props.articles.map(a => (<ArticlePreview key={a.title} article={a} />))}
       </div>
     );
   }
@@ -69,4 +76,4 @@ const mapStateToProps = state => ({
   articles: state.fetch.articles,
 });
 
-export default connect(mapStateToProps, { getArticles })(ArticleList);
+export default connect(mapStateToProps, { getArticles, addArticle })(ArticleList);

@@ -1,8 +1,16 @@
-import GET_ARTICLES from './types';
+import { GET_ARTICLES, ADD_ARTICLE } from './types';
 
-const getArticles = articles => ({
-  type: GET_ARTICLES,
-  payload: { articles },
-});
+export function getArticles(articles) {
+  return ({
+    type: GET_ARTICLES,
+    payload: articles,
+  });
+}
 
-export default getArticles;
+export function addArticle(article) {
+  return ({
+    type: ADD_ARTICLE,
+    payload: article,
+  });
+}
+

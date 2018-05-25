@@ -20,9 +20,11 @@ class ArticlePreview extends Component {
   }
 
   componentDidMount() {
-    axios.get('/all').then(function(response) {
+    axios.get('/all').then((response) => {
       console.log('success response', response);
-    }).catch(function(err) { console.log('error', err)});
+    }).catch((err) => {
+      console.log('error', err);
+    });
   }
 
   render() {
@@ -34,7 +36,10 @@ class ArticlePreview extends Component {
           <div> { article.author } </div>
         </Heading>
         <Collapse>
-          <Body> { article.body} </Body>
+          <Body>
+            { article.body}
+            <ArticleModal currentArticle={article} />
+          </Body>
           <Footer>
             { article.tags.map(tag => (<Label key={tag} bsStyle="info" style={{ marginRight: 5 }}> {tag} </Label>))
               }

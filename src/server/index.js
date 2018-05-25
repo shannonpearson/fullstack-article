@@ -20,7 +20,6 @@ app.get('/all', (req, res) => {
     if (err) {
       console.log('error', err);
     } else {
-      console.log('resultsssss', results);
       res.status(200).json(results);
     }
   });
