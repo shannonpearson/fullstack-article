@@ -35,17 +35,48 @@ const getAllArticlesByDate = function (cb) {
   });
 };
 
-const searchArticles = function (filters, cb) {
+const searchArticles = (filters, cb) => {
   // filters is an object with db parameters to search (e..g title)
   Article.find(filters).sort('dateCreated').exec((err, results) => {
     if (err) {
       console.log('error searching results in db', err);
     } else {
+      console.log('searched articles', results);
       cb(results);
     }
   });
 };
 
+const newArticle = (article) => {
+  Article.create(article, (err) => {
+    if (err) {
+      console.log('error adding new article', err);
+    } else {
+      console.log('added new article!');
+    }
+  }); // article should have all fields (title, author, body, tags)
+  // need to search articles again
+};
+
+const updateArticle = (article) => { // article should have all fields to UPDATE
+  Article.updateOne({ _id: articleId }, article, (err, res) => {
+    if (err) {
+      console.log('error updating article', err);
+    } else {
+      console.log('updated ' + res.modifiedCount + ' articles');
+    }
+  })
+};
+
+const deleteArticle = (articleId) => {
+  Article.deleteOne({ _id: articleId }, (err) => {
+    if (err) {
+      console.log('error deleting article', err);
+    } else {
+      console.log('article deleted!');
+    }
+  })
+};
 
 // instance: const article = new Article({ title: 'some string', author: 'some name string', etc. })
 // could add method to find same author, probably same tags?
@@ -55,4 +86,7 @@ const searchArticles = function (filters, cb) {
 module.exports = {
   getAllArticlesByDate,
   searchArticles,
+  newArticle,
+  updateArticle,
+  deleteArticle,
 };
