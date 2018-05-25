@@ -7,13 +7,13 @@ const app = express();
 
 app.use(compression());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // SERVES STATIC HOMEPAGE
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => { // req, res, next (took out next because not used for linter)
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 app.listen(8000, () => {
-  console.log(`Server running on port 8000.\nKeep "yarn wds" running in an other terminal.`)
+  console.log('Server running on port 8000.\nKeep "yarn wds" running in an other terminal.');
 });
