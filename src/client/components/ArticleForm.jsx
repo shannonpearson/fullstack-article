@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 const { Component } = React;
 
@@ -15,23 +16,25 @@ class ArticleForm extends Component {
   }
 
   handleChange(e) {
-    this.setState({
-      e.target.id: e.target.value,
-    })
+    console.log('form change');
+    // this.setState({
+    // e.target.id: e.target.value,
+    // })
   }
 
   render() {
     return (
       <form>
         <FormGroup>
-        <ControlLabel> Title </ControlLabel>
+          <ControlLabel> Title </ControlLabel>
           <FormControl
             type="text"
             id="title"
-            value="this.state.title"
+            value={this.state.title}
             placeholder="enter title"
             onChange={this.handleChange}
           />
+          <ControlLabel> Author </ControlLabel>
           <FormControl
             type="text"
             id="author"
@@ -39,9 +42,10 @@ class ArticleForm extends Component {
             placeholder="who u?"
             onChange={this.handleChange}
           />
+          <ControlLabel> Article Body </ControlLabel>
           <FormControl
             type="text"
-            value="body"
+            value={this.state.body}
             placeholder="write something cool..."
             onChange={this.onChange}
           />

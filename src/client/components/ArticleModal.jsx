@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import React from 'react';
 
 import { Modal, Button } from 'react-bootstrap';
@@ -5,7 +7,9 @@ import { Modal, Button } from 'react-bootstrap';
 import ArticleForm from './ArticleForm';
 
 const { Component } = React;
-const { Header, Title, Body, Footer } = Modal;
+const {
+  Header, Title, Body, Footer,
+} = Modal;
 
 class ArticleModal extends Component {
   constructor(props) { // props should include article _id
@@ -15,7 +19,9 @@ class ArticleModal extends Component {
       title: '', // this.props.article.title...
       author: '',
       body: '',
+      currentArticle: null,
     };
+    this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.saveNew = this.saveNew.bind(this);
     this.saveChange = this.saveChange.bind(this);
@@ -25,7 +31,7 @@ class ArticleModal extends Component {
     this.setState({ show: false });
   }
   // could just do one toggle show method?
-  handleOpen() {
+  handleShow() {
     this.setState({ show: true });
   }
 
@@ -40,25 +46,27 @@ class ArticleModal extends Component {
   render() {
     return (
 
-      <Button onClick={this.handleShow}> { this.currentArticle ? 'Edit' : 'New' } </Button>
+      <div>
+        <Button onClick={this.handleShow}> { this.currentArticle ? 'Edit' : 'New' } </Button>
 
-      <Modal show={this.state.show} onHide={this.handleClose}>
-        <Header closeButton> 
-          <Title>
-            {this.props.currentArticle ? 'Edit Article' : 'Write New Article'} 
-          </Title>
-        </Header>
-        <Body>
-          This is a modal body
-        </Body>
-        <Footer>
-          <Button onClick={this.props.currentArticle ? this.saveChange : this.saveNew}> Save </Button>
-          <Button onClick={this.handleClose}> Cancel </Button>
-          {this.props.currentArticle && (
-            <Button> Delete Article </Button>
-          )}
-        </Footer>
-      </Modal>
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Header closeButton>
+            <Title>
+              {this.props.currentArticle ? 'Edit Article' : 'Write New Article'} 
+            </Title>
+          </Header>
+          <Body>
+            <ArticleForm currentArticle={this.state.currentArticle} />
+          </Body>
+          <Footer>
+            <Button onClick={this.props.currentArticle ? this.saveChange : this.saveNew}> Save </Button>
+            <Button onClick={this.handleClose}> Cancel </Button>
+            {this.props.currentArticle && (
+              <Button> Delete Article </Button>
+            )}
+          </Footer>
+        </Modal>
+      </div>
     );
   }
 

@@ -1,15 +1,20 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
-import { Navbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
 import ArticlePreview from './ArticlePreview';
+import ArticleModal from './ArticleModal';
 import getArticles from '../actions/index';
 
-const { Header, Brand } = Navbar;
 
+const article = {
+  title: 'Harvey Weinstein charged with rape following New York arrest',
+  author: 'Reuters',
+  body: 'Former Hollywood mogul Harvey Weinstein has been charged in New York with rape and several counts of sexual abuse stemming from two separate accusers. Mr Weinstein turned himself in to police in the city earlier in the day. Dozens of women have made allegations against the 66-year - old, including rape and sexual assault, and giving rise to the #MeToo movement. Mr Weinstein has denied committing any non-consensual sex acts.He is now out on bail, wearing a monitoring device. A statement from the New York Police Department said Mr Weinstein was arrested, processed and charged with rape, criminal sex act, sex abuse and sexual misconduct for incidents involving two separate women. He arrived at the police station in lower Manhattan at 07: 30(12: 30 BST) on Friday, carrying three books.After having his mugshot and fingerprints taken, he was led out in handcuffs and taken to court.',
+  tags: ['harvey weinstein', 'hollywood', 'legal'],
+};
 
 // going to make this stateful for the sake of getting redux up but should probably wrap in app or something to update store so we can leave this as a dumb componennt maybe
 
@@ -52,14 +57,8 @@ class ArticleList extends React.Component {
     const { articles } = this.props;
     return (
       <div>
-        <Navbar>
-          <Header>
-            <Brand>
-                holla
-            </Brand>
-          </Header>
-        </Navbar>
-        { articles.map(article => (<ArticlePreview key={article.title} article={article} />))}
+        <ArticleModal currentArticle={article} />
+        { articles.map(a => (<ArticlePreview key={a.title} article={a} />))}
       </div>
     );
   }

@@ -4,6 +4,8 @@ import React from 'react';
 import axios from 'axios';
 import { Panel, Label } from 'react-bootstrap';
 
+import ArticleModal from './ArticleModal';
+
 const { Component } = React;
 const {
   Heading, Title, Body, Footer, Collapse,
