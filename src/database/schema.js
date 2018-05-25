@@ -58,12 +58,13 @@ const newArticle = (article) => {
   // need to search articles again
 };
 
-const updateArticle = (articleId, changes) => { // article should have all fields to UPDATE, plus _id as id
+const updateArticle = (articleId, changes) => {
+  // article should have all fields to UPDATE, plus _id as id
   Article.updateOne({ _id: articleId }, changes, (err, res) => {
     if (err) {
       console.log('error updating article', err);
     } else {
-      console.log(`updated ${res.modifiedCount} articles`);
+      console.log(`updated ${res} articles`);
     }
   });
 };

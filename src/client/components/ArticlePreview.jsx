@@ -29,6 +29,7 @@ class ArticlePreview extends Component {
 
   render() {
     const { article } = this.props;
+    console.log('ARTICLE', article);
     return (
       <Panel bsStyle="info" defaultExpanded={false}>
         <Heading>
@@ -37,7 +38,7 @@ class ArticlePreview extends Component {
         </Heading>
         <Collapse>
           <Body>
-            { article.body}
+            { article.body }
             <ArticleModal currentArticle={article} />
           </Body>
           <Footer>

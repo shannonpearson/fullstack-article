@@ -31,17 +31,19 @@ app.get('/search', (req, res) => {
 });
 
 app.post('/new', (req, res) => {
-  db.newArticle(res.article);
+  console.log('request body new', req.body);
+  db.newArticle(res.body.article);
   res.status(200).json({});
   db.getAllArticlesByDate();
 });
 
 // probably update urls to /article/edit, etc
 app.patch('/edit', (req, res) => {
-  db.updateArticle(res.articleId, res.changes);
+  console.log('patching', req.body);
+  db.updateArticle(req.body.id, req.body.data);
   res.status(200).json({});
 });
 
 app.listen(8000, () => {
-  console.log('Server running on port 8000.\nKeep "yarn wds" running in an other terminal.');
+  console.log('Server running osn port 8000.\nKeep "yarn wds" running in an other terminal.');
 });
