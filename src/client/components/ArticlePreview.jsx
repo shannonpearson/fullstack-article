@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
+import axios from 'axios';
 import { Panel, Label } from 'react-bootstrap';
 
 const { Component } = React;
@@ -16,12 +17,19 @@ class ArticlePreview extends Component {
     };
   }
 
+  componentDidMount() {
+    axios.get('/all').then(function(response) {
+      console.log('success');
+    }).catch(function(err) { console.log('error', err)});
+  }
+
   render() {
     const { article } = this.props;
     return (
       <Panel bsStyle="info" defaultExpanded={false}>
         <Heading>
           <Title componentClass="h3" toggle> { article.title } </Title>
+          <div> { article.author } </div>
         </Heading>
         <Collapse>
           <Body> { article.body} </Body>
