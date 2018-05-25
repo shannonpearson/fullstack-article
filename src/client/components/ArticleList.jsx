@@ -18,7 +18,9 @@ class ArticleList extends React.Component {
     super(props);
     this.state = {
       filter: null,
-    }
+    };
+    this.filterSearch = this.filterSearch.bind(this);
+    this.search = this.search.bind(this);
   }
 
   componentWillMount() {
@@ -29,11 +31,24 @@ class ArticleList extends React.Component {
       })
       .catch((err) => {
         console.log('error', err);
-      })
+      });
+  }
+
+  filterSearch(text) {
+    this.setState({
+      filter: text,
+    });
+  }
+
+  search() {
+    // axios request with state.filter asa param
+    axios.get('/search', { params: { filter: this.state.filter } }).then((response) => {
+      console.log('search results', response);
+    });
   }
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     const { articles } = this.props;
     return (
       <div>
@@ -46,9 +61,8 @@ class ArticleList extends React.Component {
         </Navbar>
         { articles.map(article => (<ArticlePreview key={article.title} article={article} />))}
       </div>
-    )
+    );
   }
-
 }
 
 

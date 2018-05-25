@@ -12,25 +12,39 @@ db.on('connected', () => { console.log('connected'); });
 db.once('open', () => {
 });
 
-  const articleSchema = mongoose.Schema({
-    title: String,
-    author: String,
-    body: String,
-    dateCreated: { type: Date, default: Date.now },
-    lastUpdate: { type: Date, default: Date.now },
-    tags: Array,
-  });
+const articleSchema = mongoose.Schema({
+  title: String,
+  author: String,
+  body: String,
+  dateCreated: { type: Date, default: Date.now },
+  lastUpdate: { type: Date, default: Date.now },
+  tags: Array,
+});
 
   // add methods here, before compiling with model
 
-  const Article = mongoose.model('Article', articleSchema);
+const Article = mongoose.model('Article', articleSchema);
 
-  const getAllArticlesByDate = function (cb) {
-    Article.find({}).sort('dateCreated').exec((err, results) => {
-      console.log('error', err, 'results', results);
+const getAllArticlesByDate = function (cb) {
+  Article.find({}).sort('dateCreated').exec((err, results) => {
+    if (err) {
+      console.log('error getting all articles', err);
+    } else {
       cb(err, results);
-    });
-  };
+    }
+  });
+};
+
+const searchArticles = function (filters, cb) {
+  // filters is an object with db parameters to search (e..g title)
+  Article.find(filters).sort('dateCreated').exec((err, results) => {
+    if (err) {
+      console.log('error searching results in db', err);
+    } else {
+      cb(results);
+    }
+  });
+};
 
 
 // instance: const article = new Article({ title: 'some string', author: 'some name string', etc. })
@@ -38,4 +52,7 @@ db.once('open', () => {
 // maybe do a separate method for both of those tho
 
 
-module.exports = getAllArticlesByDate;
+module.exports = {
+  getAllArticlesByDate,
+  searchArticles,
+};

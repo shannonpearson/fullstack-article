@@ -2,7 +2,7 @@ const compression = require('compression');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const getAllArticlesByDate = require('../database/schema');
+const db = require('../database/schema');
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.get('/', (req, res) => { // req, res, next (took out next because not used f
 });
 
 app.get('/all', (req, res) => {
-  getAllArticlesByDate((err, results) => {
+  db.getAllArticlesByDate((err, results) => {
     if (err) {
       console.log('error', err);
     } else {
@@ -24,6 +24,10 @@ app.get('/all', (req, res) => {
       res.status(200).json(results);
     }
   });
+});
+
+app.get('/search', (req, res) => {
+  db.searchArticles(res.filter);
 });
 
 app.listen(8000, () => {

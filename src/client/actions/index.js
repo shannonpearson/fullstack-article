@@ -1,10 +1,8 @@
 import GET_ARTICLES from './types';
 
-const getArticles = articles => {
-    console.log('action', articles)
-return {
+const getArticles = articles => ({
   type: GET_ARTICLES,
-  payload: { articles }
-};};
+  payload: { articles },
+});
 
 export default getArticles;
