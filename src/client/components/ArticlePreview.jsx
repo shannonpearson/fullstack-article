@@ -21,7 +21,7 @@ class ArticlePreview extends Component {
 
   componentDidMount() {
     axios.get('/all').then((response) => {
-      console.log('success response', response);
+      // console.log('success response', response);
     }).catch((err) => {
       console.log('error', err);
     });
@@ -31,7 +31,7 @@ class ArticlePreview extends Component {
     const { article } = this.props;
     console.log('ARTICLE', article);
     return (
-      <Panel bsStyle="info" defaultExpanded={false}>
+      <Panel bsStyle="info" defaultExpanded={false} style={{ width: '80%', margin: 'auto', marginTop: 50 }}>
         <Heading>
           <Title componentClass="h3" toggle> { article.title } </Title>
           <div> { article.author } </div>

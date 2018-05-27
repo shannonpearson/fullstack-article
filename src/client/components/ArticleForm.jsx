@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
+import { without } from 'lodash';
 
-import { form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { form, FormGroup, FormControl, ControlLabel, Panel, Label, Button } from 'react-bootstrap';
 
 const { Component } = React;
 
@@ -13,8 +14,12 @@ class ArticleForm extends Component {
       title: this.props.currentArticle ? this.props.currentArticle.title : '',
       author: this.props.currentArticle ? this.props.currentArticle.author : '',
       body: this.props.currentArticle ? this.props.currentArticle.body : '',
+      tags: this.props.currentArticle ? this.props.currentArticle.tags : [],
+      newTag: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleAddTag = this.handleAddTag.bind(this);
+    this.deleteTag = this.deleteTag.bind(this);
   }
 
   handleChange(e) {
@@ -22,7 +27,45 @@ class ArticleForm extends Component {
     this.setState({
       [e.target.id]: e.target.value,
     });
-    this.props.handleChange(e);
+    const {
+      title,
+      author,
+      body,
+      tags,
+    } = this.state;
+    this.props.handleChange({
+      title,
+      author,
+      body,
+      tags,
+    });
+  }
+
+  handleAddTag(e) {
+    if (this.state.newTag.length > 0) {
+      this.setState({
+        tags: this.state.tags.concat([this.state.newTag.toLowerCase()]),
+        newTag: '',
+      });
+    }
+  }
+
+  deleteTag(e) {
+    this.setState({
+      tags: without(this.state.tags, e.target.id),
+    });
+    const {
+      title,
+      author,
+      body,
+      tags,
+    } = this.state;
+    this.props.handleChange({
+      title,
+      author,
+      body,
+      tags,
+    });
   }
 
   render() {
@@ -49,11 +92,27 @@ class ArticleForm extends Component {
           <FormControl
             type="text"
             id="body"
+            componentClass="textarea"
             value={this.state.body}
             placeholder="write something cool..."
             onChange={this.handleChange}
           />
+          <FormControl
+            type="text"
+            id="newTag"
+            value={this.state.newTag}
+            placeholder="enter tag"
+            onChange={this.handleChange}
+          />
+          <Button onClick={this.handleAddTag}> Add Tag </Button>
         </FormGroup>
+        <Panel>
+          <Panel.Body>
+            {this.state.tags.map(tag => (
+              <Label key={tag}> {tag} <span id={tag} onClick={this.deleteTag} style={{ color: 'red' }}>x</span> </Label>
+            ))}
+          </Panel.Body>
+        </Panel>
       </form>
     );
   }

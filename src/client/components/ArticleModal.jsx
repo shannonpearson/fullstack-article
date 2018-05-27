@@ -22,6 +22,7 @@ class ArticleModal extends Component {
       title: this.props.currentArticle ? this.props.currentArticle.title : '',
       author: this.props.currentArticle ? this.props.currentArticle.author : '',
       body: this.props.currentArticle ? this.props.currentArticle.body : '',
+      tags: [],
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -38,10 +39,14 @@ class ArticleModal extends Component {
     this.setState({ show: true });
   }
 
-  handleFormChange(e) {
-    console.log('passed to modal', e.target);
-    const { id, value } = e.target;
-    this.setState({ [id]: value });
+  handleFormChange(obj) {
+    console.log('passed to modal', obj);
+    this.setState({
+      title: obj.title,
+      author: obj.author,
+      body: obj.body,
+      tags: obj.tags,
+    })
   }
 
   saveNew() {
@@ -50,6 +55,7 @@ class ArticleModal extends Component {
       title: this.state.title,
       author: this.state.author,
       body: this.state.body,
+      tags: this.state.tags,
     };
     axios.post('/new', { article: newArticle })
       .then(() => {
@@ -77,7 +83,6 @@ class ArticleModal extends Component {
   }
 
   render() {
-    console.log('modal current article', this.props.currentArticle);
     return (
 
       <div>

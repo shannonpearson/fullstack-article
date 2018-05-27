@@ -11,12 +11,12 @@ import ArticleModal from './ArticleModal';
 import { getArticles, addArticle } from '../actions/index';
 
 
-const article = {
-  title: 'Harvey Weinstein charged with rape following New York arrest',
-  author: 'Reuters',
-  body: 'Former Hollywood mogul Harvey Weinstein has been charged in New York with rape and several counts of sexual abuse stemming from two separate accusers. Mr Weinstein turned himself in to police in the city earlier in the day. Dozens of women have made allegations against the 66-year - old, including rape and sexual assault, and giving rise to the #MeToo movement. Mr Weinstein has denied committing any non-consensual sex acts.He is now out on bail, wearing a monitoring device. A statement from the New York Police Department said Mr Weinstein was arrested, processed and charged with rape, criminal sex act, sex abuse and sexual misconduct for incidents involving two separate women. He arrived at the police station in lower Manhattan at 07: 30(12: 30 BST) on Friday, carrying three books.After having his mugshot and fingerprints taken, he was led out in handcuffs and taken to court.',
-  tags: ['harvey weinstein', 'hollywood', 'legal'],
-};
+// const article = {
+//   title: 'Harvey Weinstein charged with rape following New York arrest',
+//   author: 'Reuters',
+//   body: 'Former Hollywood mogul Harvey Weinstein has been charged in New York with rape and several counts of sexual abuse stemming from two separate accusers. Mr Weinstein turned himself in to police in the city earlier in the day. Dozens of women have made allegations against the 66-year - old, including rape and sexual assault, and giving rise to the #MeToo movement. Mr Weinstein has denied committing any non-consensual sex acts.He is now out on bail, wearing a monitoring device. A statement from the New York Police Department said Mr Weinstein was arrested, processed and charged with rape, criminal sex act, sex abuse and sexual misconduct for incidents involving two separate women. He arrived at the police station in lower Manhattan at 07: 30(12: 30 BST) on Friday, carrying three books.After having his mugshot and fingerprints taken, he was led out in handcuffs and taken to court.',
+//   tags: ['harvey weinstein', 'hollywood', 'legal'],
+// };
 
 // going to make this stateful for the sake of getting redux up but should probably
 // wrap in app or something to update store so we can leave this as a dumb componennt maybe
@@ -29,13 +29,11 @@ class ArticleList extends React.Component {
     };
     this.filterSearch = this.filterSearch.bind(this);
     this.search = this.search.bind(this);
-    this.listProps = this.listProps.bind(this);
   }
 
   componentWillMount() {
     axios.get('all')
       .then((response) => {
-        console.log('responseeee', response.data);
         this.props.getArticles(response.data);
       })
       .catch((err) => {
@@ -56,16 +54,10 @@ class ArticleList extends React.Component {
     });
   }
 
-  listProps() {
-    console.log('PROPS!', this.props)
-  }
-
   render() {
     console.log('les props', this.props);
     return (
       <div>
-        <ArticleModal currentArticle={article} />
-        <Button onClick={this.listProps}>PROPS</Button>
         { this.props.articles.map(a => (<ArticlePreview key={a.title} article={a} />))}
       </div>
     );
