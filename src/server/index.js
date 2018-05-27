@@ -26,12 +26,12 @@ app.get('/all', (req, res) => {
 });
 
 app.get('/search', (req, res) => {
-  db.searchArticles(res.filter);
+  console.log('search filter', req.query);
+  db.searchArticles(req.query.filter);
   res.status(200).json({});
 });
 
 app.post('/new', (req, res) => {
-  console.log('request body new', req.body);
   db.newArticle(req.body.article, (err, results) => {
     if (err) {
       console.log('error', err);
@@ -54,7 +54,6 @@ app.patch('/edit', (req, res) => {
 });
 
 app.delete('/delete', (req, res) => {
-  console.log('delete request body', req.query);
   db.deleteArticle(req.query.id, (err, results) => {
     if (err) {
       console.log('error deleting in server', err);

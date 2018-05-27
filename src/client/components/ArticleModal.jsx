@@ -68,7 +68,6 @@ class ArticleModal extends Component {
   }
 
   saveChange() {
-    console.log('modal state', this.state)
     // axios request to send patch request to save changes to article
     axios.patch('/edit', {
       id: this.props.currentArticle._id,
@@ -106,7 +105,7 @@ class ArticleModal extends Component {
     return (
 
       <div>
-        <Button onClick={this.handleShow}> { this.props.currentArticle ? 'Edit/Delete' : 'New' } </Button>
+        <Button onClick={this.handleShow} style={{ marginTop: 7 }} > { this.props.currentArticle ? 'Edit/Delete' : 'New' } </Button>
 
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Header closeButton>

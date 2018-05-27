@@ -44,7 +44,6 @@ class ArticleList extends React.Component {
   }
 
   render() {
-    console.log('les props', this.props);
     return (
       <div>
         { this.props.articles.map(a => (<ArticlePreview key={a.title} article={a} />))}

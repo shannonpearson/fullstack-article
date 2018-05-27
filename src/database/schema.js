@@ -17,7 +17,7 @@ const articleSchema = mongoose.Schema({
   author: String,
   body: String,
   dateCreated: { type: Date, default: Date.now },
-  lastUpdate: { type: Date, default: null },
+  lastUpdate: { type: Date, default: Date.now },
   tags: Array,
 });
 
@@ -52,7 +52,6 @@ const newArticle = (article, cb) => {
     if (err) {
       console.log('error adding new article', err);
     } else {
-      console.log('added new article!');
       getAllArticlesByDate(cb);
     }
   }); // article should have all fields (title, author, body, tags)
@@ -65,7 +64,7 @@ const updateArticle = (articleId, changes, cb) => {
     if (err) {
       console.log('error updating article', err);
     } else {
-      console.log(`updated ${res} articles`);
+      console.log(`updated ${res.nModified} articles; changes: `, changes);
       getAllArticlesByDate(cb);
     }
   });
@@ -76,7 +75,6 @@ const deleteArticle = (articleId, cb) => {
     if (err) {
       console.log('error deleting article', err);
     } else {
-      console.log('article deleted!');
       getAllArticlesByDate(cb);
     }
   });

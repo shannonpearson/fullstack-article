@@ -23,7 +23,7 @@ class ArticlePreview extends Component {
   }
 
   searchTags(e) {
-    axios.get('/search', { params: { tag: e.target.id } })
+    axios.get('/search', { params: { filter: e.target.id } })
       .then((response) => {
         this.props.getArticles(response.data);
       })
@@ -44,10 +44,10 @@ class ArticlePreview extends Component {
     const posted = new Date(article.dateCreated);
     const update = new Date(article.lastUpdate);
     return (
-      <Panel bsStyle="success" defaultExpanded={false} style={{ width: '80%', margin: 'auto', marginTop: 50 }}>
+      <Panel defaultExpanded={false} style={{ width: '80%', margin: 'auto', marginTop: 30 }}>
         <Heading>
           <Title componentClass="h3" toggle> { article.title } </Title>
-          <div> { article.author } </div>
+          <div style={{ fontStyle: 'italic' }}> { article.author } </div>
         </Heading>
         <Collapse>
           <Body>
@@ -58,9 +58,9 @@ class ArticlePreview extends Component {
             }
           </Body>
           <Footer>
-            { article.tags.map(tag => (<Label key={tag} id={tag} bsStyle="info" onClick={this.searchTags} style={{ marginRight: 5, cursor: 'pointer' }}> {tag} </Label>))
+            { article.tags.map(tag => (<Label key={tag} id={tag} bsStyle="primary" onClick={this.searchTags} style={{ marginRight: 5, cursor: 'pointer' }}> {tag} </Label>))
             }
-            <ArticleModal currentArticle={article} style={{ marginTop: 20 }}/>
+            <ArticleModal currentArticle={article} style={{ marginTop: 20 }} />
           </Footer>
         </Collapse>
       </Panel>

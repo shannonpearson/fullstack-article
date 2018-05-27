@@ -25,18 +25,19 @@ class ArticleForm extends Component {
   handleChange(e) {
     this.setState({
       [e.target.id]: e.target.value,
-    });
-    const {
-      title,
-      author,
-      body,
-      tags,
-    } = this.state;
-    this.props.handleChange({
-      title,
-      author,
-      body,
-      tags,
+    }, () => {
+      const {
+        title,
+        author,
+        body,
+        tags,
+      } = this.state;
+      this.props.handleChange({
+        title,
+        author,
+        body,
+        tags,
+      });
     });
   }
 
@@ -45,25 +46,28 @@ class ArticleForm extends Component {
       this.setState({
         tags: this.state.tags.concat([this.state.newTag.toLowerCase()]),
         newTag: '',
-      }, () => {this.props.handleChange(this.state)});
+      }, () => {
+        this.props.handleChange(this.state);
+      });
     }
   }
 
   deleteTag(e) {
     this.setState({
       tags: without(this.state.tags, e.target.id),
-    });
-    const {
-      title,
-      author,
-      body,
-      tags,
-    } = this.state;
-    this.props.handleChange({
-      title,
-      author,
-      body,
-      tags,
+    }, () => {
+      const {
+        title,
+        author,
+        body,
+        tags,
+      } = this.state;
+      this.props.handleChange({
+        title,
+        author,
+        body,
+        tags,
+      });
     });
   }
 
@@ -78,6 +82,7 @@ class ArticleForm extends Component {
             value={this.state.title}
             placeholder="enter title"
             onChange={this.handleChange}
+            style={{ marginBottom: 5 }}
           />
           <ControlLabel> Author </ControlLabel>
           <FormControl
@@ -86,6 +91,7 @@ class ArticleForm extends Component {
             value={this.state.author}
             placeholder="who u?"
             onChange={this.handleChange}
+            style={{ marginBottom: 5 }}
           />
           <ControlLabel> Article Body </ControlLabel>
           <FormControl
@@ -95,13 +101,16 @@ class ArticleForm extends Component {
             value={this.state.body}
             placeholder="write something cool..."
             onChange={this.handleChange}
+            style={{ marginBottom: 5 }}
           />
+          <ControlLabel> Tags </ControlLabel>
           <FormControl
             type="text"
             id="newTag"
             value={this.state.newTag}
             placeholder="enter tag"
             onChange={this.handleChange}
+            style={{ marginBottom: 5 }}
           />
           <Button onClick={this.handleAddTag}> Add Tag </Button>
         </FormGroup>
