@@ -18,16 +18,16 @@ class ArticlePreview extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   axios.get('/all').then((response) => {
-  //     // console.log('success response', response);
-  //   }).catch((err) => {
-  //     console.log('error', err);
-  //   });
-  // }
-
   render() {
     const { article } = this.props;
+    const dateOptions = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+    const date = new Date(article.dateCreated);
     return (
       <Panel bsStyle="success" defaultExpanded={false} style={{ width: '80%', margin: 'auto', marginTop: 50 }}>
         <Heading>
@@ -37,23 +37,16 @@ class ArticlePreview extends Component {
         <Collapse>
           <Body>
             { article.body }
-            <ArticleModal currentArticle={article} />
+            <div> Posted: { date.toLocaleDateString('en-US', dateOptions) } </div>
           </Body>
           <Footer>
             { article.tags.map(tag => (<Label key={tag} bsStyle="info" style={{ marginRight: 5 }}> {tag} </Label>))
-              }
+            }
+            <ArticleModal currentArticle={article} />
           </Footer>
         </Collapse>
       </Panel>
     );
-    // (
-    //   <Card title={article.title}>
-    //     {article.body}
-    //     {article.tags.map(tag => (
-    //       <Label> <Icon name="tag" /> { tag } </Label>
-    //     ))}
-    //   </Card>
-    // );
   }
 }
 

@@ -51,7 +51,17 @@ app.patch('/edit', (req, res) => {
       res.status(200).json(results);
     }
   });
-  res.status(200).json({});
+});
+
+app.delete('/delete', (req, res) => {
+  console.log('delete request body', req.query);
+  db.deleteArticle(req.query.id, (err, results) => {
+    if (err) {
+      console.log('error deleting in server', err);
+    } else {
+      res.status(200).json(results);
+    }
+  });
 });
 
 app.listen(8000, () => {

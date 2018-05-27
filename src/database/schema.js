@@ -71,12 +71,13 @@ const updateArticle = (articleId, changes, cb) => {
   });
 };
 
-const deleteArticle = (articleId) => {
+const deleteArticle = (articleId, cb) => {
   Article.deleteOne({ _id: articleId }, (err) => {
     if (err) {
       console.log('error deleting article', err);
     } else {
       console.log('article deleted!');
+      getAllArticlesByDate(cb);
     }
   });
 };

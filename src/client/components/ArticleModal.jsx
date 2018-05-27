@@ -29,6 +29,7 @@ class ArticleModal extends Component {
     this.saveNew = this.saveNew.bind(this);
     this.saveChange = this.saveChange.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleClose() {
@@ -81,6 +82,16 @@ class ArticleModal extends Component {
       });
   }
 
+  handleDelete() {
+    axios.delete('/delete', { params: { id: this.props.currentArticle._id } })
+      .then((response) => {
+        this.props.getArticles(response.data);
+      })
+      .catch((err) => {
+        console.log('error deleting', err);
+      });
+  }
+
   render() {
     return (
 
@@ -100,10 +111,10 @@ class ArticleModal extends Component {
             />
           </Body>
           <Footer>
-            <Button onClick={this.props.currentArticle ? this.saveChange : this.saveNew}> { this.props.currentArticle ? 'Save' : 'New' } </Button>
+            <Button onClick={this.props.currentArticle ? this.saveChange : this.saveNew}> { 'Save' } </Button>
             <Button onClick={this.handleClose}> Cancel </Button>
             {this.props.currentArticle && (
-              <Button> Delete Article </Button>
+              <Button onClick={this.handleDelete}> Delete Article </Button>
             )}
           </Footer>
         </Modal>
