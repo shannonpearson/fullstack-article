@@ -32,15 +32,25 @@ app.get('/search', (req, res) => {
 
 app.post('/new', (req, res) => {
   console.log('request body new', req.body);
-  db.newArticle(res.body.article);
-  res.status(200).json({});
-  db.getAllArticlesByDate();
+  db.newArticle(req.body.article, (err, results) => {
+    if (err) {
+      console.log('error', err);
+    } else {
+      res.status(200).json(results);
+    }
+  });
 });
 
 // probably update urls to /article/edit, etc
 app.patch('/edit', (req, res) => {
   console.log('patching', req.body);
-  db.updateArticle(req.body.id, req.body.data);
+  db.updateArticle(req.body.id, req.body.data, (err, results) => {
+    if (err) {
+      console.log('error', err);
+    } else {
+      res.status(200).json(results);
+    }
+  });
   res.status(200).json({});
 });
 

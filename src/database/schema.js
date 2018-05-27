@@ -47,24 +47,26 @@ const searchArticles = (filters, cb) => {
   });
 };
 
-const newArticle = (article) => {
+const newArticle = (article, cb) => {
   Article.create(article, (err) => {
     if (err) {
       console.log('error adding new article', err);
     } else {
       console.log('added new article!');
+      getAllArticlesByDate(cb);
     }
   }); // article should have all fields (title, author, body, tags)
   // need to search articles again
 };
 
-const updateArticle = (articleId, changes) => {
+const updateArticle = (articleId, changes, cb) => {
   // article should have all fields to UPDATE, plus _id as id
   Article.updateOne({ _id: articleId }, changes, (err, res) => {
     if (err) {
       console.log('error updating article', err);
     } else {
       console.log(`updated ${res} articles`);
+      getAllArticlesByDate(cb);
     }
   });
 };

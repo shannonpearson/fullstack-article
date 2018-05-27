@@ -40,7 +40,6 @@ class ArticleModal extends Component {
   }
 
   handleFormChange(obj) {
-    console.log('passed to modal', obj);
     this.setState({
       title: obj.title,
       author: obj.author,
@@ -58,8 +57,8 @@ class ArticleModal extends Component {
       tags: this.state.tags,
     };
     axios.post('/new', { article: newArticle })
-      .then(() => {
-        this.props.getArticles();
+      .then((response) => {
+        this.props.getArticles(response.data);
       })
       .catch((err) => {
         console.log('error getting articles after saving new', err);
@@ -75,7 +74,7 @@ class ArticleModal extends Component {
       .then((response) => {
         // gotta update the store again
         // guess we need some match dispatch to props...
-        this.props.getArticles();
+        this.props.getArticles(response.data);
       })
       .catch((error) => {
         console.log('error updating in client');

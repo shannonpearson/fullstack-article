@@ -4,10 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-import { Button } from 'react-bootstrap';
-
 import ArticlePreview from './ArticlePreview';
-import ArticleModal from './ArticleModal';
 import { getArticles, addArticle } from '../actions/index';
 
 
