@@ -60,6 +60,7 @@ class ArticleModal extends Component {
     axios.post('/new', { article: newArticle })
       .then((response) => {
         this.props.getArticles(response.data);
+        this.handleClose();
       })
       .catch((err) => {
         console.log('error getting articles after saving new', err);
@@ -70,12 +71,18 @@ class ArticleModal extends Component {
     // axios request to send patch request to save changes to article
     axios.patch('/edit', {
       id: this.props.currentArticle._id,
-      data: { title: this.state.title, author: this.state.author, body: this.state.body },
+      data: {
+        title: this.state.title,
+        author: this.state.author,
+        body: this.state.body,
+        lastUpdate: new Date(),
+      },
     })
       .then((response) => {
         // gotta update the store again
         // guess we need some match dispatch to props...
         this.props.getArticles(response.data);
+        this.handleClose();
       })
       .catch((err) => {
         console.log('error updating in client', err);
@@ -86,6 +93,7 @@ class ArticleModal extends Component {
     axios.delete('/delete', { params: { id: this.props.currentArticle._id } })
       .then((response) => {
         this.props.getArticles(response.data);
+        this.handleClose();
       })
       .catch((err) => {
         console.log('error deleting', err);

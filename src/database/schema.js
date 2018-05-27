@@ -17,7 +17,7 @@ const articleSchema = mongoose.Schema({
   author: String,
   body: String,
   dateCreated: { type: Date, default: Date.now },
-  lastUpdate: { type: Date, default: Date.now },
+  lastUpdate: { type: Date, default: null },
   tags: Array,
 });
 

@@ -27,7 +27,8 @@ class ArticlePreview extends Component {
       hour: 'numeric',
       minute: 'numeric',
     };
-    const date = new Date(article.dateCreated);
+    const posted = new Date(article.dateCreated);
+    const update = new Date(article.lastUpdate);
     return (
       <Panel bsStyle="success" defaultExpanded={false} style={{ width: '80%', margin: 'auto', marginTop: 50 }}>
         <Heading>
@@ -37,7 +38,10 @@ class ArticlePreview extends Component {
         <Collapse>
           <Body>
             { article.body }
-            <div> Posted: { date.toLocaleDateString('en-US', dateOptions) } </div>
+            <div> Posted: { posted.toLocaleDateString('en-US', dateOptions) } </div>
+            { posted === update ||
+              <div> Last updated: { update.toLocaleDateString('en-US', dateOptions) } </div>
+            }
           </Body>
           <Footer>
             { article.tags.map(tag => (<Label key={tag} bsStyle="info" style={{ marginRight: 5 }}> {tag} </Label>))
