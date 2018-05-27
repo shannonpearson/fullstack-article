@@ -109,7 +109,7 @@ class ArticleForm extends Component {
         <Panel>
           <Panel.Body>
             {this.state.tags.map(tag => (
-              <Label key={tag}> {tag} <span id={tag} onClick={this.deleteTag} style={{ color: 'red' }}>x</span> </Label>
+              <Label key={tag}> {tag} <span id={tag} onClick={this.deleteTag} style={{ color: 'red', cursor: 'pointer' }}>x</span> </Label>
             ))}
           </Panel.Body>
         </Panel>
