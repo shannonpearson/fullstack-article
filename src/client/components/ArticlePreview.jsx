@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
 import { Panel, Label } from 'react-bootstrap';
 
 import ArticleModal from './ArticleModal';
+import { getArticles } from '../actions/index';
 
 const { Component } = React;
 const {
@@ -16,6 +19,17 @@ class ArticlePreview extends Component {
     this.state = {
     //   expandView: false,
     };
+    this.searchTags = this.searchTags.bind(this);
+  }
+
+  searchTags(e) {
+    axios.get('/search', { params: { tag: e.target.id } })
+      .then((response) => {
+        this.props.getArticles(response.data);
+      })
+      .catch((err) => {
+        console.log('error searching', err);
+      });
   }
 
   render() {
@@ -44,7 +58,7 @@ class ArticlePreview extends Component {
             }
           </Body>
           <Footer>
-            { article.tags.map(tag => (<Label key={tag} bsStyle="info" style={{ marginRight: 5 }}> {tag} </Label>))
+            { article.tags.map(tag => (<Label key={tag} id={tag} bsStyle="info" onClick={this.searchTags} style={{ marginRight: 5, cursor: 'pointer' }}> {tag} </Label>))
             }
             <ArticleModal currentArticle={article} />
           </Footer>
@@ -54,4 +68,4 @@ class ArticlePreview extends Component {
   }
 }
 
-export default ArticlePreview;
+export default connect(null, { getArticles })(ArticlePreview);
