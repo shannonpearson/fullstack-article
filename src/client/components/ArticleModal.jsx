@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types, class-methods-use-this */
+/* eslint-disable react/prop-types, class-methods-use-this, no-underscore-dangle */
 
 import React from 'react';
 import axios from 'axios';
@@ -45,7 +45,7 @@ class ArticleModal extends Component {
       author: obj.author,
       body: obj.body,
       tags: obj.tags,
-    })
+    });
   }
 
   saveNew() {
@@ -76,8 +76,8 @@ class ArticleModal extends Component {
         // guess we need some match dispatch to props...
         this.props.getArticles(response.data);
       })
-      .catch((error) => {
-        console.log('error updating in client');
+      .catch((err) => {
+        console.log('error updating in client', err);
       });
   }
 
@@ -85,7 +85,7 @@ class ArticleModal extends Component {
     return (
 
       <div>
-        <Button onClick={this.handleShow}> { this.props.currentArticle ? 'Edit' : 'New' } </Button>
+        <Button onClick={this.handleShow}> { this.props.currentArticle ? 'Edit/Delete' : 'New' } </Button>
 
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Header closeButton>
@@ -94,7 +94,10 @@ class ArticleModal extends Component {
             </Title>
           </Header>
           <Body>
-            <ArticleForm currentArticle={this.props.currentArticle} handleChange={this.handleFormChange} />
+            <ArticleForm
+              currentArticle={this.props.currentArticle}
+              handleChange={this.handleFormChange}
+            />
           </Body>
           <Footer>
             <Button onClick={this.props.currentArticle ? this.saveChange : this.saveNew}> { this.props.currentArticle ? 'Save' : 'New' } </Button>

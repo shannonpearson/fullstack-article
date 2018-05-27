@@ -23,7 +23,6 @@ class ArticleForm extends Component {
   }
 
   handleChange(e) {
-    console.log('form change', e.target);
     this.setState({
       [e.target.id]: e.target.value,
     });
@@ -41,7 +40,7 @@ class ArticleForm extends Component {
     });
   }
 
-  handleAddTag(e) {
+  handleAddTag() {
     if (this.state.newTag.length > 0) {
       this.setState({
         tags: this.state.tags.concat([this.state.newTag.toLowerCase()]),
@@ -109,7 +108,7 @@ class ArticleForm extends Component {
         <Panel>
           <Panel.Body>
             {this.state.tags.map(tag => (
-              <Label key={tag}> {tag} <span id={tag} onClick={this.deleteTag} style={{ color: 'red', cursor: 'pointer' }}>x</span> </Label>
+              <Label key={tag}> {tag} <span tabIndex={Math.floor(Math.random() * 100)} id={tag} role="button" onClick={this.deleteTag} onKeyPress={null} style={{ color: 'red', cursor: 'pointer' }}>x</span> </Label>
             ))}
           </Panel.Body>
         </Panel>
