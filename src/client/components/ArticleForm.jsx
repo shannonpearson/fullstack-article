@@ -45,7 +45,7 @@ class ArticleForm extends Component {
       this.setState({
         tags: this.state.tags.concat([this.state.newTag.toLowerCase()]),
         newTag: '',
-      });
+      }, () => {this.props.handleChange(this.state)});
     }
   }
 
@@ -108,7 +108,7 @@ class ArticleForm extends Component {
         <Panel>
           <Panel.Body>
             {this.state.tags.map(tag => (
-              <Label key={tag}> {tag} <span tabIndex={Math.floor(Math.random() * 100)} id={tag} role="button" onClick={this.deleteTag} onKeyPress={null} style={{ color: 'red', cursor: 'pointer' }}>x</span> </Label>
+              <Label key={tag} style={{ marginRight: 10 }}> {tag} <span tabIndex={Math.floor(Math.random() * 100)} id={tag} role="button" onClick={this.deleteTag} onKeyPress={null} style={{ color: 'red', cursor: 'pointer' }}>x</span> </Label>
             ))}
           </Panel.Body>
         </Panel>

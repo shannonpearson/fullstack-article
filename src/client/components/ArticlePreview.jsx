@@ -60,7 +60,7 @@ class ArticlePreview extends Component {
           <Footer>
             { article.tags.map(tag => (<Label key={tag} id={tag} bsStyle="info" onClick={this.searchTags} style={{ marginRight: 5, cursor: 'pointer' }}> {tag} </Label>))
             }
-            <ArticleModal currentArticle={article} />
+            <ArticleModal currentArticle={article} style={{ marginTop: 20 }}/>
           </Footer>
         </Collapse>
       </Panel>

@@ -68,6 +68,7 @@ class ArticleModal extends Component {
   }
 
   saveChange() {
+    console.log('modal state', this.state)
     // axios request to send patch request to save changes to article
     axios.patch('/edit', {
       id: this.props.currentArticle._id,
@@ -76,6 +77,7 @@ class ArticleModal extends Component {
         author: this.state.author,
         body: this.state.body,
         lastUpdate: new Date(),
+        tags: this.state.tags,
       },
     })
       .then((response) => {
