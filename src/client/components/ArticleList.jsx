@@ -23,12 +23,6 @@ class ArticleList extends React.Component {
     this.props.searchArticles();
   }
 
-  // handleModalSuccess(type) {
-  //   this.setState({
-  //     success: type,
-  //   });
-  // }
-
   render() {
     console.log('PROPS LIST', this.props);
 
@@ -38,7 +32,6 @@ class ArticleList extends React.Component {
 
 
     if (this.props.loading) {
-      
       return (
         <div>
           { this.props.success && successAlert() }

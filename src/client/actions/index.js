@@ -1,6 +1,6 @@
 // import ReduxThunk from 'redux-thunk';
 import axios from 'axios';
-import { IS_LOADING, UPDATE_SEARCH, HANDLE_ERROR, ADD_ARTICLE, DELETE_ARTICLE, UPDATE_ARTICLE } from './types';
+import { IS_LOADING, UPDATE_SEARCH, HANDLE_ERROR, DELETE_ARTICLE, UPDATE_ARTICLE } from './types';
 
 
 const loading = isLoading => ({
@@ -80,6 +80,7 @@ export function deleteArticle(id, cb) {
 }
 
 export function updateArticle(id, changes) {
+
   return ({
     type: UPDATE_ARTICLE,
     payload: { id, changes },
