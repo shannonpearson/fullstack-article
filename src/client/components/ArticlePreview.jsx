@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { Panel, Label } from 'react-bootstrap';
 

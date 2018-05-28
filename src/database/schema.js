@@ -29,16 +29,19 @@ const getAllArticlesByDate = function (cb) {
   Article.find({}).sort('dateCreated').exec((err, results) => {
     if (err) {
       console.log('error getting all articles', err);
+      cb(500, null);
     } else {
-      cb(err, results);
+      cb(null, results);
     }
   });
 };
 
 const newArticle = (article, cb) => {
+  console.log('adding article', article)
   Article.create(article, (err) => {
     if (err) {
-      console.log('error adding new article', err);
+      console.log('error adding new article');
+      cb(400, null);
     } else {
       getAllArticlesByDate(cb);
     }

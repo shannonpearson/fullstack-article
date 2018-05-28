@@ -1,4 +1,4 @@
-import { GET_ALL_ARTICLES, IS_LOADING, UPDATE_SEARCH, SEARCH_ERROR } from '../actions/types';
+import { IS_LOADING, UPDATE_SEARCH, HANDLE_ERROR } from '../actions/types';
 
 const INITIAL_STATE = {
   isLoading: false,
@@ -14,11 +14,9 @@ const FetchReducer = (state = INITIAL_STATE, action) => {
     case UPDATE_SEARCH:
       return { ...state, articles: action.data };
 
-    case SEARCH_ERROR:
-      return { ...state, error: action.err };
+    case HANDLE_ERROR:
+      return { ...state, error: action.error };
 
-    case GET_ALL_ARTICLES:
-      return { ...state, articles: action.payload };
     default:
       return state;
   }

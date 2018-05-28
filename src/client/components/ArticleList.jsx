@@ -24,7 +24,7 @@ class ArticleList extends React.Component {
     console.log('PROPS LIST', this.props);
 
     if (this.props.loading) {
-      return (<div style={{ textAlign: 'center' }}> Loading... </div>)
+      return (<div style={{ textAlign: 'center' }}> Loading... </div>);
     } else if (this.props.articles.length > 0) {
       return (
         <div>

@@ -4,9 +4,9 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Alert } from 'react-bootstrap';
 
-import { getAllArticles } from '../actions/index';
+import { addArticle } from '../actions/index';
 import ArticleForm from './ArticleForm';
 
 const { Component } = React;
@@ -33,6 +33,7 @@ class ArticleModal extends Component {
   }
 
   handleClose() {
+    console.log('propssss', this.props)
     this.setState({ show: false });
   }
   // could just do one toggle show method?
@@ -57,14 +58,9 @@ class ArticleModal extends Component {
       body: this.state.body,
       tags: this.state.tags,
     };
-    axios.post('/articles/new', { article: newArticle })
-      .then((response) => {
-        this.props.getAllArticles(response.data);
-        this.handleClose();
-      })
-      .catch((err) => {
-        console.log('error getting articles after saving new', err);
-      });
+    this.props.addArticle(newArticle, () => {
+      this.handleClose();
+    });
   }
 
   saveChange() {
@@ -102,6 +98,14 @@ class ArticleModal extends Component {
   }
 
   render() {
+    const alert = () => {
+      if (this.props.error === 'add') {
+        return (
+          <Alert bsStyle="warning" style={{ width: '80%', margin: 'auto' }}> Error creating article </Alert>
+        );
+      };
+    };
+
     return (
 
       <div>
@@ -114,6 +118,7 @@ class ArticleModal extends Component {
             </Title>
           </Header>
           <Body>
+            { this.props.error && alert() }
             <ArticleForm
               currentArticle={this.props.currentArticle}
               handleChange={this.handleFormChange}
@@ -132,4 +137,8 @@ class ArticleModal extends Component {
   }
 }
 
-export default connect(null, { getAllArticles })(ArticleModal);
+const mapStateToProps = state => ({
+  error: state.fetch.error,
+});
+
+export default connect(mapStateToProps, { addArticle })(ArticleModal);

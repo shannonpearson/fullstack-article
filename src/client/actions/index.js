@@ -1,6 +1,6 @@
 // import ReduxThunk from 'redux-thunk';
 import axios from 'axios';
-import { IS_LOADING, UPDATE_SEARCH, SEARCH_ERROR, GET_ALL_ARTICLES, ADD_ARTICLE, DELETE_ARTICLE, UPDATE_ARTICLE } from './types';
+import { IS_LOADING, UPDATE_SEARCH, HANDLE_ERROR, ADD_ARTICLE, DELETE_ARTICLE, UPDATE_ARTICLE } from './types';
 
 
 const loading = isLoading => ({
@@ -13,9 +13,9 @@ const updateSearch = data => ({
   data,
 });
 
-const searchError = err => ({
-  type: SEARCH_ERROR,
-  err,
+const handleError = type => ({
+  type: HANDLE_ERROR,
+  error: type,
 });
 
 
@@ -31,25 +31,29 @@ export function searchArticles(tag) {
       .then((data) => {
         dispatch(updateSearch(data));
       })
-      .catch((err) => {
-        dispatch(searchError(err));
+      .catch(() => {
+        dispatch(handleError('search'));
       });
   };
 }
 
-
-export function getAllArticles(articles) {
-  return ({
-    type: GET_ALL_ARTICLES,
-    payload: articles,
-  });
-}
-
-export function addArticle(article) {
-  return ({
-    type: ADD_ARTICLE,
-    payload: article,
-  });
+export function addArticle(article, cb) {
+  console.log('article to add', article)
+  return (dispatch) => {
+    axios.post('/articles/new', { article })
+      .then((response) => {
+        dispatch(updateSearch(response.data));
+        cb();
+      })
+      .catch((err) => {
+        console.log(err.response.status)
+        if (err.response.status === 400) { // error creating article
+          dispatch(handleError('add'));
+        } else { // 500 error on search
+          dispatch(handleError('search'));
+        }
+      });
+  };
 }
 
 // export function searchArticles(tag) {

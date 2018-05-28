@@ -32,7 +32,7 @@ app.get('/articles/all', (req, res) => {
 app.post('/articles/new', (req, res) => {
   db.newArticle(req.body.article, (err, results) => {
     if (err) {
-      console.log('error', err);
+      res.status(err).send({ error: err });
     } else {
       res.status(200).json(results);
     }
@@ -63,7 +63,6 @@ app.delete('/articles/delete', (req, res) => {
 
 app.get('/articles/search', (req, res) => {
   db.searchArticlesByTag(req.query.tag, (results) => {
-    console.log('results', results);
     res.status(200).json(results);
   });
 });
