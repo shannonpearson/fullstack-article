@@ -4,6 +4,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
+import { Alert } from 'react-bootstrap';
+
 import ArticlePreview from './ArticlePreview';
 import { getAllArticles, addArticle, searchArticles } from '../actions/index';
 
@@ -21,13 +23,14 @@ class ArticleList extends React.Component {
   }
 
   componentWillMount() {
-    axios.get('/articles/all')
-      .then((response) => {
-        this.props.getAllArticles(response.data);
-      })
-      .catch((err) => {
-        console.log('error', err);
-      });
+    this.props.searchArticles();
+    // axios.get('/articles/all')
+    //   .then((response) => {
+    //     this.props.searchArticles(response.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log('error', err);
+    //   });
   }
 
   // filterSearch(text) {
@@ -46,11 +49,21 @@ class ArticleList extends React.Component {
 
   render() {
     console.log('PROPS LIST', this.props);
+
+    if (this.props.loading) {
+      return (<div style={{ textAlign: 'center' }}> Loading... </div>)
+    } else if (this.props.articles.length > 0) {
+      return <div> {this.props.articles.map(a => (<ArticlePreview key={a.title} article={a} />))} </div>
+  }
     return (
-      <div>
-        { this.props.articles.map(a => (<ArticlePreview key={a.title} article={a} />))}
-      </div>
+      <Alert bsStyle="warning" style={{ width: '80%', margin: 'auto' }}> No articles found :/ </Alert>
     );
+
+    // return (
+    //   <div>
+    //     { this.props.articles.length > 0 ?
+    //   </div>
+    // );
   }
 }
 
