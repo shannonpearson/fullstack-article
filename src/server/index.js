@@ -19,7 +19,7 @@ app.get('/', (req, res) => { // req, res, next (took out next because not used f
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-app.get('/all', (req, res) => {
+app.get('/articles/all', (req, res) => {
   db.getAllArticlesByDate((err, results) => {
     if (err) {
       console.log('error', err);
@@ -29,7 +29,7 @@ app.get('/all', (req, res) => {
   });
 });
 
-app.post('/new', (req, res) => {
+app.post('/articles/new', (req, res) => {
   db.newArticle(req.body.article, (err, results) => {
     if (err) {
       console.log('error', err);
@@ -40,7 +40,7 @@ app.post('/new', (req, res) => {
 });
 
 // probably update urls to /article/edit, etc
-app.patch('/edit', (req, res) => {
+app.patch('/articles/edit', (req, res) => {
   console.log('patching', req.body);
   db.updateArticle(req.body.id, req.body.data, (err, results) => {
     if (err) {
@@ -51,7 +51,7 @@ app.patch('/edit', (req, res) => {
   });
 });
 
-app.delete('/delete', (req, res) => {
+app.delete('/articles/delete', (req, res) => {
   db.deleteArticle(req.query.id, (err, results) => {
     if (err) {
       console.log('error deleting in server', err);
@@ -61,7 +61,7 @@ app.delete('/delete', (req, res) => {
   });
 });
 
-app.get('/search', (req, res) => {
+app.get('/articles/search', (req, res) => {
   db.searchArticlesByTag(req.query.filter, (results) => {
     res.status(200).json(results);
   });

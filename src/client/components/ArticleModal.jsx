@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { Modal, Button } from 'react-bootstrap';
 
-import { getArticles } from '../actions/index';
+import { getAllArticles } from '../actions/index';
 import ArticleForm from './ArticleForm';
 
 const { Component } = React;
@@ -37,7 +37,6 @@ class ArticleModal extends Component {
   }
   // could just do one toggle show method?
   handleShow() {
-    console.log('PROPS', this.props);
     this.setState({ show: true });
   }
 
@@ -58,9 +57,9 @@ class ArticleModal extends Component {
       body: this.state.body,
       tags: this.state.tags,
     };
-    axios.post('/new', { article: newArticle })
+    axios.post('/articles/new', { article: newArticle })
       .then((response) => {
-        this.props.getArticles(response.data);
+        this.props.getAllArticles(response.data);
         this.handleClose();
       })
       .catch((err) => {
@@ -70,7 +69,7 @@ class ArticleModal extends Component {
 
   saveChange() {
     // axios request to send patch request to save changes to article
-    axios.patch('/edit', {
+    axios.patch('/articles/edit', {
       id: this.props.currentArticle._id,
       data: {
         title: this.state.title,
@@ -83,7 +82,7 @@ class ArticleModal extends Component {
       .then((response) => {
         // gotta update the store again
         // guess we need some match dispatch to props...
-        this.props.getArticles(response.data);
+        this.props.getAllArticles(response.data);
         this.handleClose();
       })
       .catch((err) => {
@@ -92,9 +91,9 @@ class ArticleModal extends Component {
   }
 
   handleDelete() {
-    axios.delete('/delete', { params: { id: this.props.currentArticle._id } })
+    axios.delete('/articles/delete', { params: { id: this.props.currentArticle._id } })
       .then((response) => {
-        this.props.getArticles(response.data);
+        this.props.getAllArticles(response.data);
         this.handleClose();
       })
       .catch((err) => {
@@ -133,4 +132,4 @@ class ArticleModal extends Component {
   }
 }
 
-export default connect(null, { getArticles })(ArticleModal);
+export default connect(null, { getAllArticles })(ArticleModal);

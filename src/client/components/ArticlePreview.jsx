@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Panel, Label } from 'react-bootstrap';
 
 import ArticleModal from './ArticleModal';
-import { getArticles } from '../actions/index';
+import { getAllArticles } from '../actions/index';
 
 const { Component } = React;
 const {
@@ -23,9 +23,9 @@ class ArticlePreview extends Component {
   }
 
   searchTags(e) {
-    axios.get('/search', { params: { filter: e.target.id } })
+    axios.get('/articles/search', { params: { filter: e.target.id } })
       .then((response) => {
-        this.props.getArticles(response.data);
+        this.props.getAllArticles(response.data);
       })
       .catch((err) => {
         console.log('error searching', err);
@@ -68,4 +68,4 @@ class ArticlePreview extends Component {
   }
 }
 
-export default connect(null, { getArticles })(ArticlePreview);
+export default connect(null, { getAllArticles })(ArticlePreview);

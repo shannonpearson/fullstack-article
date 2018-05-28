@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import ArticlePreview from './ArticlePreview';
-import { getArticles, addArticle } from '../actions/index';
+import { getAllArticles, addArticle } from '../actions/index';
 
 // going to make this stateful for the sake of getting redux up but should probably
 // wrap in app or something to update store so we can leave this as a dumb componennt maybe
@@ -21,9 +21,9 @@ class ArticleList extends React.Component {
   }
 
   componentWillMount() {
-    axios.get('all')
+    axios.get('/articles/all')
       .then((response) => {
-        this.props.getArticles(response.data);
+        this.props.getAllArticles(response.data);
       })
       .catch((err) => {
         console.log('error', err);
@@ -38,7 +38,7 @@ class ArticleList extends React.Component {
 
   search() {
     // axios request with state.filter asa param
-    axios.get('/search', { params: { filter: this.state.filter } }).then((response) => {
+    axios.get('/articles/search', { params: { filter: this.state.filter } }).then((response) => {
       console.log('search results', response);
     });
   }
@@ -58,4 +58,4 @@ const mapStateToProps = state => ({
   tags: state.fetch.tags,
 });
 
-export default connect(mapStateToProps, { getArticles, addArticle })(ArticleList);
+export default connect(mapStateToProps, { getAllArticles, addArticle })(ArticleList);

@@ -1,7 +1,7 @@
 import { uniq } from 'lodash';
 import { GET_ARTICLES, ADD_ARTICLE } from './types';
 
-export function getArticles(articles) {
+export function getAllArticles(articles) {
   console.log('getting articles');
   let tags = [];
   articles.forEach((article) => {

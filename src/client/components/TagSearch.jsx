@@ -3,8 +3,9 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Form, FormControl, Button, Glyphicon } from 'react-bootstrap';
+import { startsWith } from 'lodash';
 
-import { getArticles } from '../actions/index';
+import { getAllArticles } from '../actions/index';
 
 const { Component } = React;
 
@@ -28,13 +29,12 @@ class TagSearch extends Component {
     // axios get request to search
     // action to update store with all articles from that search
     console.log('term', this.state.searchTerm);
-    axios
-      .get('/search', { params: { filter: this.state.searchTerm.toLowerCase() } })
+    axios.get('/articles/search', { params: { filter: this.state.searchTerm.toLowerCase() } })
       .then((response) => {
         this.setState({
           searchTerm: '',
         });
-        this.props.getArticles(response.data);
+        this.props.getAllArticles(response.data);
       })
       .catch((err) => {
         console.log('error searching', err);
@@ -42,6 +42,7 @@ class TagSearch extends Component {
   }
 
   render() {
+    console.log('PROPS', this.props)
     return (
       <Form inline>
         <FormControl
@@ -60,4 +61,8 @@ class TagSearch extends Component {
   }
 }
 
-export default connect(null, { getArticles })(TagSearch);
+const mapStateToProps = state => ({
+  tags: state.fetch.tags,
+});
+
+export default connect(mapStateToProps, { getAllArticles })(TagSearch);

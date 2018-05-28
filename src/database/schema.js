@@ -13,9 +13,9 @@ db.once('open', () => {
 });
 
 const articleSchema = mongoose.Schema({
-  title: String,
-  author: String,
-  body: String,
+  title: { type: String, required: true },
+  author: { type: String, default: 'Anonymous' },
+  body: { type: String, required: true },
   dateCreated: { type: Date, default: Date.now },
   lastUpdate: { type: Date, default: Date.now },
   tags: Array,
