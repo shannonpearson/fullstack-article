@@ -7,6 +7,9 @@
     "start": "nodemon --ignore dist --exec babel-node src/server",
     "wds": "webpack-dev-server --progress"
   },
+  "engines": {
+    "node": "8.9.4"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
