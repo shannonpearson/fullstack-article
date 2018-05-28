@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "node_modules/.bin/webpack",
+    "postinstall": "webpack -p --config ./webpack.config.babel.js",
     "start": "nodemon --exec babel-node src/server",
     "wds": "webpack-dev-server --progress"
   },
