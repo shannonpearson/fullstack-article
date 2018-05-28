@@ -14,14 +14,27 @@ import { getAllArticles, addArticle, searchArticles } from '../actions/index';
 class ArticleList extends React.Component {
   // constructor(props) {
   //   super(props);
+  //   this.state = {
+  //     success: null;
+  //   }
   // }
 
   componentWillMount() {
     this.props.searchArticles();
   }
 
+  handleModalSuccess(type) {
+    this.setState({
+      success: type,
+    });
+  }
+
   render() {
     console.log('PROPS LIST', this.props);
+
+    { this.props.success && (
+      <Alert bsStyle="success" style={{ width: '80%', margin: 'auto' }}> Successfully { this.state.success } article! </Alert>
+    )}
 
     if (this.props.loading) {
       return (<div style={{ textAlign: 'center' }}> Loading... </div>);

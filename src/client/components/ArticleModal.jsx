@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { Modal, Button, Alert } from 'react-bootstrap';
 
-import { addArticle } from '../actions/index';
+import { addArticle, deleteArticle } from '../actions/index';
 import ArticleForm from './ArticleForm';
 
 const { Component } = React;
@@ -33,7 +33,7 @@ class ArticleModal extends Component {
   }
 
   handleClose() {
-    console.log('propssss', this.props)
+    console.log('propssss', this.props);
     this.setState({ show: false });
   }
   // could just do one toggle show method?
@@ -87,23 +87,25 @@ class ArticleModal extends Component {
   }
 
   handleDelete() {
-    axios.delete('/articles/delete', { params: { id: this.props.currentArticle._id } })
-      .then((response) => {
-        this.props.getAllArticles(response.data);
-        this.handleClose();
-      })
-      .catch((err) => {
-        console.log('error deleting', err);
-      });
+    this.props.deleteArticle(this.props.currentArticle._id, () => {
+      this.handleClose();
+    });
   }
 
   render() {
     const alert = () => {
       if (this.props.error === 'add') {
         return (
-          <Alert bsStyle="warning" style={{ width: '80%', margin: 'auto' }}> Error creating article </Alert>
+          <Alert bsStyle="warning" style={{ width: '90%', margin: 'auto' }}> Error creating article </Alert>
         );
-      };
+      } else if (this.props.error === 'delete') {
+        return (
+          <Alert bsStyle="warning" style={{ width: '90%', margin: 'auto' }}> Error deleting article </Alert>
+        );
+      } // else error should be error updating
+      return (
+        <Alert bsStyle="warning" style={{ width: '90%', margin: 'auto' }}> Error updating article </Alert>
+      );
     };
 
     return (
@@ -141,4 +143,4 @@ const mapStateToProps = state => ({
   error: state.fetch.error,
 });
 
-export default connect(mapStateToProps, { addArticle })(ArticleModal);
+export default connect(mapStateToProps, { addArticle, deleteArticle })(ArticleModal);

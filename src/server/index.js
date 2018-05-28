@@ -54,8 +54,7 @@ app.patch('/articles/edit', (req, res) => {
 app.delete('/articles/delete', (req, res) => {
   db.deleteArticle(req.query.id, (err, results) => {
     if (err) {
-      console.log('error deleting in server', err);
-      res.status(err);
+      res.sendStatus(err);
     } else {
       res.status(200).json(results);
     }
