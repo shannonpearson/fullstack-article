@@ -53,9 +53,4 @@ module.exports = {
   devServer: {
     port: 8080,
   },
-  scripts: {
-    start: 'node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js',
-    prod: 'NODE_ENV=production npm start',
-    postinstall: 'webpack -p',
-  },
 };
