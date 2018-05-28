@@ -38,7 +38,9 @@ const getAllArticlesByDate = function (cb) {
 
 const newArticle = (article, cb) => {
   Article.create(article, (err) => {
-    if (err) {
+    if (err) { // this should only happen if the article isn't valid to go into the database;
+    // handle cases for both invalid article and valid article but otherwise can't add to db
+    // but also form validation could handle it so there should only ever be a valid article sent
       cb(400, null);
     } else {
       getAllArticlesByDate(cb);

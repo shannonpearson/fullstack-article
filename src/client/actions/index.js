@@ -79,8 +79,23 @@ export function deleteArticle(id, cb) {
   };
 }
 
-export function updateArticle(id, changes) {
-
+export function updateArticle(id, changes, cb) {
+  return (dispatch) => {
+    axios.put('/articles/edit', { id, changes })
+      .then((response) => {
+        console.log('article list after updating this one article', response.data);
+        dispatch(updateSearch(response.data, 'updated'));
+        cb()
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          dispatch(handleError('delete'));
+        } else {
+          dispatch(handleError('search'));
+          cb();
+        }
+      })
+  }
   return ({
     type: UPDATE_ARTICLE,
     payload: { id, changes },

@@ -4,7 +4,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { Modal, Button, Alert } from 'react-bootstrap';
+import { Modal, Button, Alert, OverlayTrigger, Popover } from 'react-bootstrap';
 
 import { addArticle, deleteArticle } from '../actions/index';
 import ArticleForm from './ArticleForm';
@@ -109,6 +109,12 @@ class ArticleModal extends Component {
       );
     };
 
+    const confirmDelete = (
+      <Popover title="Are you sure?">
+        <Button onClick={this.handleDelete} bsStyle="danger"> Delete </Button>
+      </Popover>
+    )
+
     return (
 
       <div>
@@ -131,7 +137,9 @@ class ArticleModal extends Component {
             <Button onClick={this.props.currentArticle ? this.saveChange : this.saveNew}> { 'Save' } </Button>
             <Button onClick={this.handleClose}> Cancel </Button>
             {this.props.currentArticle && (
-              <Button onClick={this.handleDelete}> Delete Article </Button>
+              <OverlayTrigger trigger="click" placement="top" overlay={confirmDelete}>
+                <Button> Delete Article </Button>
+              </OverlayTrigger>
             )}
           </Footer>
         </Modal>

@@ -40,8 +40,8 @@ app.post('/articles/new', (req, res) => {
 });
 
 // probably update urls to /article/edit, etc
-app.patch('/articles/edit', (req, res) => {
-  console.log('patching', req.body);
+app.put('/articles/edit', (req, res) => {
+  console.log('putting', req.body);
   db.updateArticle(req.body.id, req.body.data, (err, results) => {
     if (err) {
       console.log('error', err);
