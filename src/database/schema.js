@@ -40,7 +40,6 @@ const newArticle = (article, cb) => {
   console.log('adding article', article)
   Article.create(article, (err) => {
     if (err) {
-      console.log('error adding new article');
       cb(400, null);
     } else {
       getAllArticlesByDate(cb);
@@ -66,7 +65,7 @@ const searchArticlesByTag = (tag, cb) => {
   // filters is an object with db parameters to search (e..g title)
   Article.find(query).sort('dateCreated').exec((err, results) => {
     if (err) {
-      console.log('error searching results in db', err);
+      console.log('error searching results in db');
     } else {
       cb(results);
     }
@@ -76,7 +75,8 @@ const searchArticlesByTag = (tag, cb) => {
 const deleteArticle = (articleId, cb) => {
   Article.deleteOne({ _id: articleId }, (err) => {
     if (err) {
-      console.log('error deleting article', err);
+      console.log('error deleting article');
+      cb(400, null);
     } else {
       getAllArticlesByDate(cb);
     }

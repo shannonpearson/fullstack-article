@@ -38,7 +38,6 @@ export function searchArticles(tag) {
 }
 
 export function addArticle(article, cb) {
-  console.log('article to add', article)
   return (dispatch) => {
     axios.post('/articles/new', { article })
       .then((response) => {
@@ -46,28 +45,35 @@ export function addArticle(article, cb) {
         cb();
       })
       .catch((err) => {
-        console.log(err.response.status)
         if (err.response.status === 400) { // error creating article
           dispatch(handleError('add'));
         } else { // 500 error on search
           dispatch(handleError('search'));
+          // call callback to close modal because create article was successful
+          cb();
         }
       });
   };
 }
 
-// export function searchArticles(tag) {
-//   return ({
-//     type: SEARCH_ARTICLES,
-//     payload: tag,
-//   });
-// }
-
-export function deleteArticle(id) {
-  return ({
-    type: DELETE_ARTICLE,
-    payload: id,
-  });
+export function deleteArticle(id, cb) {
+  return (dispatch) => {
+    axios.delete('/articles/delete', { params: { id } })
+      .then((response) => { // response.data = all articles
+        console.log('updated list of articles', response.data)
+        dispatch(updateSearch(response.data));
+        cb();
+      })
+      .catch((err) => {
+        console.log(err.response.status);
+        if (err.response.status === 400) {
+          dispatch(handleError('delete'));
+        } else {
+          dispatch(handleError('search'));
+          cb();
+        }
+      });
+  };
 }
 
 export function updateArticle(id, changes) {
