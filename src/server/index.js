@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 if (process.env.NODE_ENV === 'production') {
-  app.use('/static/', express.static((path.join(__dirname, 'dist')));
+  app.use('/static', express.static((path.join(__dirname, 'dist')));
 }
 
 // SERVES STATIC HOMEPAGE
