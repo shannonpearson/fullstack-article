@@ -8,14 +8,15 @@ const loading = isLoading => ({
   isLoading,
 });
 
-const updateSearch = data => ({
+const updateSearch = (data, success) => ({
   type: UPDATE_SEARCH,
   data,
+  success,
 });
 
-const handleError = type => ({
+const handleError = error => ({
   type: HANDLE_ERROR,
-  error: type,
+  error,
 });
 
 
@@ -29,7 +30,7 @@ export function searchArticles(tag) {
         return response.data;
       })
       .then((data) => {
-        dispatch(updateSearch(data));
+        dispatch(updateSearch(data, null));
       })
       .catch(() => {
         dispatch(handleError('search'));
@@ -41,12 +42,14 @@ export function addArticle(article, cb) {
   return (dispatch) => {
     axios.post('/articles/new', { article })
       .then((response) => {
-        dispatch(updateSearch(response.data));
+        dispatch(updateSearch(response.data, 'added'));
+        console.log('adding')
         cb();
       })
       .catch((err) => {
+        console.log('error error', err)
         if (err.response.status === 400) { // error creating article
-          dispatch(handleError('add'));
+          dispatch(handleError('added'));
         } else { // 500 error on search
           dispatch(handleError('search'));
           // call callback to close modal because create article was successful
@@ -61,7 +64,7 @@ export function deleteArticle(id, cb) {
     axios.delete('/articles/delete', { params: { id } })
       .then((response) => { // response.data = all articles
         console.log('updated list of articles', response.data)
-        dispatch(updateSearch(response.data));
+        dispatch(updateSearch(response.data, 'deleted'));
         cb();
       })
       .catch((err) => {

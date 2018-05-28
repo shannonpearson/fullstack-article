@@ -23,30 +23,40 @@ class ArticleList extends React.Component {
     this.props.searchArticles();
   }
 
-  handleModalSuccess(type) {
-    this.setState({
-      success: type,
-    });
-  }
+  // handleModalSuccess(type) {
+  //   this.setState({
+  //     success: type,
+  //   });
+  // }
 
   render() {
     console.log('PROPS LIST', this.props);
 
-    { this.props.success && (
-      <Alert bsStyle="success" style={{ width: '80%', margin: 'auto' }}> Successfully { this.state.success } article! </Alert>
-    )}
+    const successAlert = () => (
+      <Alert bsStyle="success" style={{ width: '80%', margin: 'auto' }}> Successfully { this.props.success } article! </Alert>
+    );
+
 
     if (this.props.loading) {
-      return (<div style={{ textAlign: 'center' }}> Loading... </div>);
+      
+      return (
+        <div>
+          { this.props.success && successAlert() }
+          <div style={{ textAlign: 'center' }}> Loading... </div>;
+        </div>)
     } else if (this.props.articles.length > 0) {
       return (
         <div>
+          {this.props.success && successAlert()}
           {this.props.articles.map(a => (<ArticlePreview key={a.title} article={a} />))}
         </div>
       );
     }
     return (
-      <Alert bsStyle="warning" style={{ width: '80%', margin: 'auto' }}> No articles found :/ </Alert>
+      <div>
+        {this.props.success && successAlert()}
+        <Alert bsStyle="warning" style={{ width: '80%', margin: 'auto' }}> No articles found :/ </Alert>
+      </div>
     );
   }
 }
@@ -55,7 +65,8 @@ class ArticleList extends React.Component {
 const mapStateToProps = state => ({
   articles: state.fetch.articles,
   loading: state.fetch.isLoading,
-  searchError: state.fetch.error,
+  searchError: state.fetch.error === 'search',
+  success: state.fetch.success,
 });
 
 export default connect(mapStateToProps, {

@@ -37,7 +37,6 @@ const getAllArticlesByDate = function (cb) {
 };
 
 const newArticle = (article, cb) => {
-  console.log('adding article', article)
   Article.create(article, (err) => {
     if (err) {
       cb(400, null);
@@ -75,7 +74,6 @@ const searchArticlesByTag = (tag, cb) => {
 const deleteArticle = (articleId, cb) => {
   Article.deleteOne({ _id: articleId }, (err) => {
     if (err) {
-      console.log('error deleting article');
       cb(400, null);
     } else {
       getAllArticlesByDate(cb);

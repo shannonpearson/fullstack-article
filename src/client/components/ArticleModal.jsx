@@ -88,6 +88,7 @@ class ArticleModal extends Component {
 
   handleDelete() {
     this.props.deleteArticle(this.props.currentArticle._id, () => {
+      console.log('DELETED')
       this.handleClose();
     });
   }
