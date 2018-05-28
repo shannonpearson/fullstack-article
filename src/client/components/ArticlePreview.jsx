@@ -25,6 +25,7 @@ class ArticlePreview extends Component {
   searchTags(e) {
     axios.get('/search', { params: { filter: e.target.id } })
       .then((response) => {
+        console.log('response', response);
         this.props.getArticles(response.data);
       })
       .catch((err) => {

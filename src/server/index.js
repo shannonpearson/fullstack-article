@@ -29,12 +29,6 @@ app.get('/all', (req, res) => {
   });
 });
 
-app.get('/search', (req, res) => {
-  console.log('search filter', req.query);
-  db.searchArticlesByTag(req.query.filter);
-  res.status(200).json({});
-});
-
 app.post('/new', (req, res) => {
   db.newArticle(req.body.article, (err, results) => {
     if (err) {
@@ -67,7 +61,14 @@ app.delete('/delete', (req, res) => {
   });
 });
 
-app.use(express.static(path.join(__dirname)));
+app.get('/search', (req, res) => {
+  console.log('search filter', req.query);
+  db.searchArticlesByTag(req.query.filter, (results) => {
+    res.status(200).json(results);
+  });
+});
+
+// app.use(express.static(path.join(__dirname)));
 
 app.listen(process.env.PORT || 8000, () => {
   console.log('Server running osn port 8000.\nKeep "yarn wds" running in an other terminal.');

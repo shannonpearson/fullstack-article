@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "webpack -p --config ./webpack.config.babel.js --progress",
-    "start": "nodemon --exec babel-node src/server",
+    "start": "nodemon --ignore dist --exec babel-node src/server",
     "wds": "webpack-dev-server --progress"
   },
   "engines": {
