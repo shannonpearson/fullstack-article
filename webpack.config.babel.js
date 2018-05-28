@@ -4,9 +4,7 @@ const webpack = require('webpack');
 /* eslint-enable no-unused-vars */
 
 module.exports = {
-  entry: [
-    './src/client',
-  ],
+  entry: ['./src/client'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -54,5 +52,10 @@ module.exports = {
   },
   devServer: {
     port: 8080,
+  },
+  scripts: {
+    start: 'node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js',
+    prod: 'NODE_ENV=production node server.js',
+    postinstall: 'webpack -p',
   },
 };
