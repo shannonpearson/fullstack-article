@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/server",
+    "postinstall": "NODE_ENV=production webpack -p",
+    "start": "nodemon --ignore dist --exec babel-node src/server",
     "wds": "webpack-dev-server --progress"
   },
   "engines": {
