@@ -67,6 +67,10 @@ app.delete('/delete', (req, res) => {
   });
 });
 
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/index.html'));
+});
+
 app.listen(process.env.PORT || 8000, () => {
   console.log('Server running osn port 8000.\nKeep "yarn wds" running in an other terminal.');
 });
