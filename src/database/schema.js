@@ -59,7 +59,7 @@ const updateArticle = (articleId, changes, cb) => {
 };
 
 const searchArticlesByTag = (tag, cb) => {
-  const query = tag ? { tag } : {};
+  const query = tag ? { tags: tag } : {};
   // filters is an object with db parameters to search (e..g title)
   Article.find(query).sort('dateCreated').exec((err, results) => {
     if (err) {
