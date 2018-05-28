@@ -10,9 +10,9 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-if (process.env.NODE_ENV === 'production') {
-  app.use('/static', express.static((path.join(__dirname, 'dist')));
-}
+// if (process.env.NODE_ENV === 'production') {
+//   app.use('/static', express.static((path.join(__dirname, 'dist')));
+// }
 
 // SERVES STATIC HOMEPAGE
 app.get('/', (req, res) => { // req, res, next (took out next because not used for linter)
