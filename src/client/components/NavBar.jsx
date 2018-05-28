@@ -12,7 +12,7 @@ const NavBar = () => (
         holla
       </Brand>
     </Header>
-    <ArticleModal style={{ marginTop: 10 }}  />
+    <ArticleModal />
   </Navbar>
 );
 
