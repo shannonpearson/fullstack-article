@@ -25,7 +25,6 @@ class ArticlePreview extends Component {
   searchTags(e) {
     axios.get('/search', { params: { filter: e.target.id } })
       .then((response) => {
-        console.log('response', response);
         this.props.getArticles(response.data);
       })
       .catch((err) => {
@@ -48,7 +47,7 @@ class ArticlePreview extends Component {
       <Panel defaultExpanded={false} style={{ width: '80%', margin: 'auto', marginTop: 30 }}>
         <Heading>
           <Title componentClass="h3" toggle> { article.title } </Title>
-          <div style={{ fontStyle: 'italic' }}> { article.author } </div>
+          <div style={{ fontStyle: 'italic' }}> by { article.author } </div>
         </Heading>
         <Collapse>
           <Body>

@@ -37,6 +37,7 @@ class ArticleModal extends Component {
   }
   // could just do one toggle show method?
   handleShow() {
+    console.log('PROPS', this.props);
     this.setState({ show: true });
   }
 
@@ -105,7 +106,7 @@ class ArticleModal extends Component {
     return (
 
       <div>
-        <Button onClick={this.handleShow} style={{ marginTop: 7 }} > { this.props.currentArticle ? 'Edit/Delete' : 'New' } </Button>
+        <Button onClick={this.handleShow} bsSize="small"> { this.props.currentArticle ? 'Edit/Delete' : 'New' } </Button>
 
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Header closeButton>

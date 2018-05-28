@@ -62,7 +62,6 @@ app.delete('/delete', (req, res) => {
 });
 
 app.get('/search', (req, res) => {
-  console.log('search filter', req.query);
   db.searchArticlesByTag(req.query.filter, (results) => {
     res.status(200).json(results);
   });

@@ -55,6 +55,7 @@ class ArticleList extends React.Component {
 
 const mapStateToProps = state => ({
   articles: state.fetch.articles,
+  tags: state.fetch.tags,
 });
 
 export default connect(mapStateToProps, { getArticles, addArticle })(ArticleList);

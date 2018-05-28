@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 const FetchReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_ARTICLES:
-      return { ...state, articles: action.payload };
+      return { ...state, articles: action.payload.articles, tags: action.payload.tags };
     default:
       return state;
   }

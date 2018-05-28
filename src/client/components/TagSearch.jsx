@@ -1,6 +1,10 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import axios from 'axios';
-import { form, FormControl, Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Form, FormControl, Button, Glyphicon } from 'react-bootstrap';
+
+import { getArticles } from '../actions/index';
 
 const { Component } = React;
 
@@ -10,43 +14,50 @@ class TagSearch extends Component {
     this.state = {
       searchTerm: '',
     };
+    this.onTextChange = this.onTextChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentDidMount() {
-    // get all tags
-  }
-
-  onTextChange(text) {
+  onTextChange(e) {
     this.setState({
-      searchTerm: text,
+      searchTerm: e.target.value,
     });
   }
 
   onSubmit() {
     // axios get request to search
     // action to update store with all articles from that search
-    axios.get('/search', { params: { searchTerm: this.state.searchTerm } })
-      .then(() => {
-        console.log('successfully got filtered search results by tag');
+    console.log('term', this.state.searchTerm);
+    axios
+      .get('/search', { params: { filter: this.state.searchTerm.toLowerCase() } })
+      .then((response) => {
+        this.setState({
+          searchTerm: '',
+        });
+        this.props.getArticles(response.data);
       })
       .catch((err) => {
-        console.log('error on search', err);
+        console.log('error searching', err);
       });
   }
 
   render() {
     return (
-      <form>
+      <Form inline>
         <FormControl
           id="searchTerm"
           type="text"
           label="search term"
           placeholder="search tags"
+          value={this.state.searchTerm}
+          onChange={this.onTextChange}
+          style={{ width: 200 }}
+          bsSize="small"
         />
-        <Button onClick={this.onSubmit}> Search </Button>
-      </form>
+        <Button onClick={this.onSubmit} bsSize="small"> <Glyphicon glyph="search" /> </Button>
+      </Form>
     );
   }
 }
 
-export default TagSearch;
+export default connect(null, { getArticles })(TagSearch);

@@ -64,7 +64,6 @@ const searchArticlesByTag = (tag, cb) => {
     if (err) {
       console.log('error searching results in db', err);
     } else {
-      console.log('searched articles', results);
       cb(results);
     }
   });
