@@ -27,7 +27,7 @@ app.get('/all', (req, res) => {
 
 app.get('/search', (req, res) => {
   console.log('search filter', req.query);
-  db.searchArticles(req.query.filter);
+  db.searchArticlesByTag(req.query.filter);
   res.status(200).json({});
 });
 

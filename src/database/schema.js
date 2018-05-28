@@ -35,18 +35,6 @@ const getAllArticlesByDate = function (cb) {
   });
 };
 
-const searchArticles = (filters, cb) => {
-  // filters is an object with db parameters to search (e..g title)
-  Article.find(filters).sort('dateCreated').exec((err, results) => {
-    if (err) {
-      console.log('error searching results in db', err);
-    } else {
-      console.log('searched articles', results);
-      cb(results);
-    }
-  });
-};
-
 const newArticle = (article, cb) => {
   Article.create(article, (err) => {
     if (err) {
@@ -70,6 +58,18 @@ const updateArticle = (articleId, changes, cb) => {
   });
 };
 
+const searchArticlesByTag = (tag, cb) => {
+  // filters is an object with db parameters to search (e..g title)
+  Article.find({ tags: tag }).sort('dateCreated').exec((err, results) => {
+    if (err) {
+      console.log('error searching results in db', err);
+    } else {
+      console.log('searched articles', results);
+      cb(results);
+    }
+  });
+};
+
 const deleteArticle = (articleId, cb) => {
   Article.deleteOne({ _id: articleId }, (err) => {
     if (err) {
@@ -87,7 +87,7 @@ const deleteArticle = (articleId, cb) => {
 
 module.exports = {
   getAllArticlesByDate,
-  searchArticles,
+  searchArticlesByTag,
   newArticle,
   updateArticle,
   deleteArticle,
