@@ -20,10 +20,10 @@ const handleError = error => ({
   error,
 });
 
-
+// search articles with (optional) tag filter
 export function searchArticles(tag) {
   return (dispatch) => {
-    dispatch(loading(true));
+    dispatch(loading(true)); // state loading while awaiting axios promises
 
     axios.get('/articles/search/', { params: { tag } })
       .then((response) => {
@@ -34,10 +34,12 @@ export function searchArticles(tag) {
         dispatch(updateSearch(data, null));
       })
       .catch(() => {
+        dispatch(loading(false));
         dispatch(handleError('searching'));
       });
   };
 }
+
 
 export function addArticle(article, cb) {
   return (dispatch) => {

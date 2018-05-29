@@ -123,8 +123,8 @@ class ArticleModal extends Component {
           <Header closeButton>
             <Title>
               {this.props.currentArticle ? 'Edit Article' : 'Write New Article'}
+              {this.state.loading && <Alert bsStyle="info"> {this.state.loading} </Alert>}
             </Title>
-            {this.state.loading && <Alert bsStyle="info"> {this.state.loading} </Alert>}
           </Header>
           <Body>
             {this.props.error &&

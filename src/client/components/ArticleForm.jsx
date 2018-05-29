@@ -64,22 +64,6 @@ class ArticleForm extends Component {
   }
 
   render() {
-    // const titleValidation = () => {
-    //   switch (this.props.validTitle) {
-    //     case true:
-    //       return 'success';
-    //     case false:
-    //       return 'error';
-    //     default:
-    //       return null;
-    //   }
-    // };
-
-    // const bodyValidation = () => {
-    //   switch (this.props.validBody) {
-    //   }
-    // };
-    
     const validate = (field) => {
       switch (this.props[field]) {
         case true:
@@ -89,7 +73,7 @@ class ArticleForm extends Component {
         default:
           return null;
       }
-    }
+    };
 
     return (
       <form>

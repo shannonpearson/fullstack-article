@@ -50,9 +50,7 @@ class TagSearch extends Component {
   }
 
   chooseTag(e) {
-    this.setState({
-      searchTerm: e.target.id,
-    }, () => {
+    this.setState({ searchTerm: e.target.id }, () => {
       this.onSubmit();
     });
   }
@@ -72,7 +70,7 @@ class TagSearch extends Component {
           bsSize="small"
         />
         <Overlay
-          show={this.state.filteredResults.length > 0}
+          show={!!this.state.searchTerm.length && !!this.state.filteredResults.length}
           target={this.state.filterTarget}
           placement="bottom"
         >

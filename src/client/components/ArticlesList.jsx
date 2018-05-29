@@ -16,10 +16,8 @@ class ArticlesList extends React.Component {
     super(props);
     this.state = {
       activePage: 1,
-      success: this.props.success,
     };
     this.updatePage = this.updatePage.bind(this);
-    this.dismissAlert = this.dismissAlert.bind(this);
   }
 
   componentWillMount() {
@@ -30,22 +28,15 @@ class ArticlesList extends React.Component {
     this.setState({ activePage: e.target.id });
   }
 
-  dismissAlert() {
-    this.setState({
-      success: null,
-    });
-  }
-
   render() {
     const { length } = this.props.articles;
 
     const successAlert = () => (
       <Alert
         bsStyle="success"
-        onDismiss={this.dismissAlert}
         style={{ width: '80%', margin: 'auto' }}
       >
-      Successfully { this.state.success } article!
+        Successfully { this.props.success } article!
       </Alert>
     );
 
@@ -65,7 +56,7 @@ class ArticlesList extends React.Component {
 
     return (
       <div>
-        {this.state.success && successAlert()}
+        {this.props.success && successAlert()}
         {this.props.loading && <div style={{ textAlign: 'center' }}> Loading... </div>}
         {length ?
           (
