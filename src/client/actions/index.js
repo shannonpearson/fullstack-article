@@ -40,7 +40,7 @@ export function searchArticles(tag) {
   };
 }
 
-
+// add article and update store with new list of all articles
 export function addArticle(article, cb) {
   return (dispatch) => {
     axios.post('/articles/new', { article })
@@ -49,35 +49,37 @@ export function addArticle(article, cb) {
         cb();
       })
       .catch((err) => {
-        if (err.response.status === 400) { // error creating article
-          dispatch(handleError('adding'));
-        } else { // 500 error on search
+        if (err.response.status === 503) {
+          // server returns 503 after successful add/delete/update but unsuccessful search
           dispatch(handleError('searching'));
-          // call callback to close modal because create article was successful
-          cb();
+          cb(); // call callback to close modal because create article was successful
+        } else {
+          dispatch(handleError('adding'));
         }
       });
   };
 }
 
+// delete article and update store with new list of all articles
 export function deleteArticle(id, cb) {
   return (dispatch) => {
     axios.delete('/articles/delete', { params: { id } })
-      .then((response) => { // response.data = all articles
+      .then((response) => {
         dispatch(updateSearch(response.data, 'deleted'));
         cb();
       })
       .catch((err) => {
-        if (err.response.status === 400) {
-          dispatch(handleError('deleting'));
-        } else {
+        if (err.response.status === 503) {
           dispatch(handleError('searching'));
           cb();
+        } else {
+          dispatch(handleError('deleting'));
         }
       });
   };
 }
 
+// update article and update store with new list of all articles
 export function updateArticle(id, changes, cb) {
   return (dispatch) => {
     axios.put('/articles/edit', { id, changes })
@@ -86,11 +88,11 @@ export function updateArticle(id, changes, cb) {
         cb();
       })
       .catch((err) => {
-        if (err.response.status === 400) {
-          dispatch(handleError('deleting'));
-        } else {
+        if (err.response.status === 503) {
           dispatch(handleError('searching'));
           cb();
+        } else {
+          dispatch(handleError('deleting'));
         }
       });
   };

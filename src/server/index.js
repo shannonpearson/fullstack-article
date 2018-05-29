@@ -15,6 +15,17 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
+app.get('/articles/search', (req, res) => {
+  // doesn't need an argument because it will find all articles if no tag is provided
+  db.searchArticlesByTag(req.query.tag, (err, results) => {
+    if (err) {
+      res.sendStatus(err);
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
 app.post('/articles/new', (req, res) => {
   if (req.body.article) {
     db.newArticle(req.body.article, (err, results) => {
@@ -55,17 +66,6 @@ app.delete('/articles/delete', (req, res) => {
   } else {
     res.sendStatus(400);
   }
-});
-
-app.get('/articles/search', (req, res) => {
-  // doesn't need an argument because it will find all articles if no tag is provided
-  db.searchArticlesByTag(req.query.tag, (err, results) => {
-    if (err) {
-      res.sendStatus(err);
-    } else {
-      res.status(200).json(results);
-    }
-  });
 });
 
 

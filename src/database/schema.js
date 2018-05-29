@@ -33,7 +33,7 @@ const searchArticlesByTag = (tag, cb) => {
   const query = tag ? { tags: tag } : {};
   Article.find(query).sort({ dateCreated: -1 }).exec((err, results) => {
     if (err) { // if query fails, return server error
-      cb(500, null);
+      cb(503, null);
     } else { // otherwise, get all tags from all articles
       Article.find({}, { tags: 1, _id: 0 }, (error, res) => {
         if (error) { // if tags query fails, still return results but with empty array of tags
@@ -62,11 +62,17 @@ const newArticle = (article, cb) => {
 
 // update existing article record and return updated collection of all articles
 const updateArticle = (articleId, changes, cb) => {
-  Article.updateOne({ _id: articleId }, changes, (err) => {
-    if (err) { // form validation and server should confirm valid changes were sent
-      cb(500, null);
+  Article.find({ _id: articleId }, (err) => {
+    if (err) { // handles case where article with id doesn't exist
+      newArticle(changes, cb);
     } else {
-      searchArticlesByTag(null, cb);
+      Article.updateOne({ _id: articleId }, changes, (error) => {
+        if (error) { // form validation and server should confirm valid changes were sent
+          cb(500, null);
+        } else {
+          searchArticlesByTag(null, cb);
+        }
+      });
     }
   });
 };
