@@ -2,8 +2,9 @@
 /* eslint-disable no-prototype-builtins */
 const mongoose = require('mongoose');
 const uniq = require('lodash/uniq');
+require('dotenv').config();
 
-const uri = 'mongodb://shannon:verb@ds123129.mlab.com:23129/articles';
+const uri = process.env.MONGODB_URI;
 // const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/articles';
 
 mongoose.connect(uri);

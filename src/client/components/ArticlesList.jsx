@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-closing-tag-location */
 /* eslint-disable react/prop-types */
 /* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 
@@ -7,9 +8,6 @@ import { Alert, Pagination } from 'react-bootstrap';
 
 import { addArticle, searchArticles } from '../actions/index';
 import ArticleView from './ArticleView';
-
-// going to make this stateful for the sake of getting redux up but should probably
-// wrap in app or something to update store so we can leave this as a dumb componennt maybe
 
 class ArticlesList extends React.Component {
   constructor(props) {
@@ -40,7 +38,6 @@ class ArticlesList extends React.Component {
       </Alert>
     );
 
-    /* eslint-disable react/jsx-closing-tag-location */
     const pages = [];
     for (let i = 1; i <= Math.ceil((length / 8)); i++) {
       pages.push(<Pagination.Item
@@ -52,7 +49,6 @@ class ArticlesList extends React.Component {
         {i}
       </Pagination.Item>);
     }
-    /* eslint-enable react/jsx-closing-tag-location */
 
     return (
       <div>
