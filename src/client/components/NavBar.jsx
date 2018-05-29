@@ -7,7 +7,7 @@ import TagSearch from './TagSearch';
 const { Header, Brand } = Navbar;
 
 const NavBar = () => (
-  <Navbar fixedTop inverse fluid>
+  <Navbar inverse fluid fixedTop>
     <Header>
       <Brand>
         holla

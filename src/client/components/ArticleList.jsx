@@ -48,6 +48,7 @@ class ArticleList extends React.Component {
       <Alert bsStyle="success" style={{ width: '80%', margin: 'auto' }}> Successfully { this.props.success } article! </Alert>
     );
 
+    // definitely refactor this render!
 
     if (this.props.loading) {
       return (

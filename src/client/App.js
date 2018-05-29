@@ -18,7 +18,8 @@ class App extends Component {
       <Provider store={store}>
         <div>
           <NavBar />
-          <ArticleList />
+          <div style={{ height: 50}}/>
+          <ArticleList/>
         </div>
       </Provider>
     )
