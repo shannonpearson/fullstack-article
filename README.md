@@ -2,6 +2,7 @@
 
 Add, edit, delete, and read articles in a Mongo database.
 Be sure to npm install!
+MONGODB_URI in .env is 'mongodb://shannon:verb@ds123129.mlab.com:23129/articles' if needed
 
 ### Getting Started
 1. Open two separate terminal tabs.
