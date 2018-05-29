@@ -57,7 +57,7 @@ class ArticleModal extends Component {
   }
 
   validateForm(cb) {
-    if (this.state.titleValid && this.state.bodyValid) {
+    if (this.state.title.length > 0 && this.state.body.length > 0) {
       cb();
     } else {
       this.setState({

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
-import { without } from 'lodash';
+import { without, trim } from 'lodash';
 
 import { form, FormGroup, FormControl, ControlLabel, HelpBlock, Panel, Label, Button } from 'react-bootstrap';
 
@@ -34,8 +34,12 @@ class ArticleForm extends Component {
 
   handleAddTag() {
     if (this.state.newTag.length > 0) {
+      const tags = this.state.newTag.split(',').map((tag) => {
+        return trim(tag.toLowerCase());
+      }); 
+      console.log('adding tags', tags)
       this.setState({
-        tags: this.state.tags.concat([this.state.newTag.toLowerCase()]),
+        tags: this.state.tags.concat(tags),
         newTag: '',
       }, () => {
         this.props.handleChange({ tags: this.state.tags });
