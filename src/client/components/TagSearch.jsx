@@ -18,6 +18,7 @@ class TagSearch extends Component {
     };
     this.onTextChange = this.onTextChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.chooseTag = this.chooseTag.bind(this);
   }
 
   onTextChange(e) {
@@ -37,7 +38,18 @@ class TagSearch extends Component {
   onSubmit() {
     if (this.state.searchTerm.length > 0) {
       this.props.searchArticles(this.state.searchTerm);
+      this.setState({
+        searchTerm: '',
+      });
     }
+  }
+
+  chooseTag(e) {
+    this.setState({
+      searchTerm: e.target.id,
+    }, () => {
+      this.onSubmit();
+    });
   }
 
   render() {
@@ -60,11 +72,9 @@ class TagSearch extends Component {
         >
           <Popover id="filter search popover">
             <div>
-          {
-                this.state.filteredResults.slice(0, 10).map(tag => (
-                  <div key={tag}> {tag} </div>
-                ))
-              }
+              {this.state.filteredResults.slice(0, 10).map(tag => (
+                <Button id={tag} onClick={this.chooseTag} key={tag}> {tag} </Button>
+              ))}
             </div>
           </Popover>
         </Overlay>
