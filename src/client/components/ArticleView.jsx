@@ -4,8 +4,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Panel, Label } from 'react-bootstrap';
 
-import ArticleModal from './ArticleModal';
 import { searchArticles } from '../actions/index';
+import ArticleModal from './ArticleModal';
 
 const { Component } = React;
 const {
@@ -15,9 +15,6 @@ const {
 class ArticleView extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    // //   expandView: false,
-    // };
     this.searchTags = this.searchTags.bind(this);
   }
 
@@ -45,12 +42,23 @@ class ArticleView extends Component {
         <Collapse>
           <Body>
             { article.body }
-            <div style={{ fontStyle: 'italic' }}> Posted: { posted.toLocaleDateString('en-US', dateOptions) } </div>
-            { posted === update ||
-              <div style={{ fontStyle: 'italic', marginBottom: 5 }}> Last updated: { update.toLocaleDateString('en-US', dateOptions) } </div>
-            }
-            { article.tags.map(tag => (<Label key={tag} id={tag} bsStyle="primary" onClick={this.searchTags} style={{ marginRight: 5, cursor: 'pointer' }}> {tag} </Label>))
-            }
+            <div style={{ fontStyle: 'italic' }}>
+              Posted: { posted.toLocaleDateString('en-US', dateOptions) }
+            </div>
+            <div style={{ fontStyle: 'italic', marginBottom: 5 }}>
+              Last updated: { update.toLocaleDateString('en-US', dateOptions) }
+            </div>
+            { article.tags.map(tag => (
+              <Label
+                key={tag}
+                id={tag}
+                bsStyle="primary"
+                onClick={this.searchTags}
+                style={{ marginRight: 5, cursor: 'pointer' }}
+              >
+                {tag}
+              </Label>
+            ))}
           </Body>
           <Footer>
             <ArticleModal currentArticle={article} />

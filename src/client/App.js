@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 import reducers from './reducers/index';
 import NavBar from './components/NavBar';
-import ArticleList from './components/ArticleList';
+import ArticlesList from './components/ArticlesList';
 
 const App = () => {
   const store = createStore(reducers, applyMiddleware(thunk));
@@ -17,7 +17,7 @@ const App = () => {
       <div>
         <NavBar />
         <div style={{ height: 70 }} />
-        <ArticleList />
+        <ArticlesList />
       </div>
     </Provider>
   )

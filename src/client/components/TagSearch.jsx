@@ -14,7 +14,7 @@ class TagSearch extends Component {
     this.state = {
       searchTerm: '',
       filteredResults: [],
-      target: null,
+      filterTarget: null,
     };
     this.onTextChange = this.onTextChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -32,7 +32,7 @@ class TagSearch extends Component {
     this.setState({
       searchTerm: e.target.value,
       filteredResults,
-      target: e.target,
+      filterTarget: e.target,
     });
   }
 
@@ -73,12 +73,12 @@ class TagSearch extends Component {
         />
         <Overlay
           show={this.state.filteredResults.length > 0}
-          target={this.state.target}
+          target={this.state.filterTarget}
           placement="bottom"
         >
           <Popover id="filter search popover">
             <div>
-              {this.state.filteredResults.slice(0, 10).map(tag => (
+              {this.state.filteredResults.slice(0, 30).map(tag => (
                 <Button id={tag} onClick={this.chooseTag} key={tag}> {tag} </Button>
               ))}
             </div>

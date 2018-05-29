@@ -5,13 +5,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Alert, Pagination } from 'react-bootstrap';
 
-import ArticleView from './ArticleView';
 import { addArticle, searchArticles } from '../actions/index';
+import ArticleView from './ArticleView';
 
 // going to make this stateful for the sake of getting redux up but should probably
 // wrap in app or something to update store so we can leave this as a dumb componennt maybe
 
-class ArticleList extends React.Component {
+class ArticlesList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -102,4 +102,4 @@ const mapStateToProps = state => ({
   tags: state.search.tags,
 });
 
-export default connect(mapStateToProps, { addArticle, searchArticles })(ArticleList);
+export default connect(mapStateToProps, { addArticle, searchArticles })(ArticlesList);
