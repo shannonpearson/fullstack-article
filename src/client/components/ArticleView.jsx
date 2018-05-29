@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Panel, Label } from 'react-bootstrap';
+import { Panel, Label, Glyphicon } from 'react-bootstrap';
 
 import { searchArticles } from '../actions/index';
 import ArticleModal from './ArticleModal';
@@ -42,12 +42,13 @@ class ArticleView extends Component {
         <Collapse>
           <Body>
             { article.body }
-            <div style={{ fontStyle: 'italic' }}>
+            <div style={{ fontStyle: 'italic', marginTop: 5 }}>
               Posted: { posted.toLocaleDateString('en-US', dateOptions) }
             </div>
-            <div style={{ fontStyle: 'italic', marginBottom: 5 }}>
+            <div style={{ fontStyle: 'italic', marginBottom: 8 }}>
               Last updated: { update.toLocaleDateString('en-US', dateOptions) }
             </div>
+            <Glyphicon glyph="tags" style={{ marginRight: 8 }} />
             { article.tags.map(tag => (
               <Label
                 key={tag}
