@@ -39,7 +39,7 @@ const searchArticlesByTag = (tag, cb) => {
         if (error) { // if tags query fails, still return results but with empty array of tags
           cb(null, { results, tags: [] });
         } else { // otherwise return articles and array of all tags
-          const tags = res.reduce((array, obj) => array.concat(obj.tags), []);
+          const tags = uniq(res.reduce((array, obj) => array.concat(obj.tags), []));
           cb(null, { results, tags });
         }
       });
@@ -63,7 +63,7 @@ const newArticle = (article, cb) => {
 // update existing article record and return updated collection of all articles
 const updateArticle = (articleId, changes, cb) => {
   Article.updateOne({ _id: articleId }, changes, (err) => {
-    if (err) { // form validation and server should confirm valid changes were sent so error is server error
+    if (err) { // form validation and server should confirm valid changes were sent
       cb(500, null);
     } else {
       searchArticlesByTag(null, cb);
