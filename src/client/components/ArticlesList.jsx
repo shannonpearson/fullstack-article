@@ -34,7 +34,7 @@ class ArticlesList extends React.Component {
     const successAlert = () => (
       <Alert
         bsStyle="info"
-        style={{ width: '80%', margin: 'auto' }}
+        style={{ width: '80%', margin: 'auto', marginTop: 20 }}
       >
         Successfully { this.props.success } article!
       </Alert>

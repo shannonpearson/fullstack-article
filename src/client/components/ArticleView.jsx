@@ -35,17 +35,20 @@ class ArticleView extends Component {
     const update = new Date(article.lastUpdate);
     return (
       <Panel defaultExpanded={false} bsStyle="success" style={{ width: '80%', margin: 'auto', marginTop: 30 }}>
+
         <Heading>
           <Title componentClass="h3" toggle> { article.title } </Title>
           <div style={{ fontStyle: 'italic' }}> by { article.author } </div>
         </Heading>
+
         <Collapse>
+
           <Body>
-            { article.body }
-            <div style={{ fontStyle: 'italic', marginTop: 5 }}>
+            <div style={{ fontStyle: 'italic', marginBottom: 5 }}>
               Posted: { posted.toLocaleDateString('en-US', dateOptions) }
             </div>
-            <div style={{ fontStyle: 'italic', marginBottom: 8 }}>
+            { article.body }
+            <div style={{ fontStyle: 'italic', marginTop: 5, marginBottom: 8 }}>
               Last updated: { update.toLocaleDateString('en-US', dateOptions) }
             </div>
             <Glyphicon glyph="tags" style={{ marginRight: 8 }} />
@@ -61,10 +64,12 @@ class ArticleView extends Component {
               </Label>
             ))}
           </Body>
+
           <Footer>
             <ArticleModal currentArticle={article} />
           </Footer>
         </Collapse>
+
       </Panel>
     );
   }
