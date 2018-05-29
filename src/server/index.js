@@ -42,10 +42,12 @@ app.post('/articles/new', (req, res) => {
 // probably update urls to /article/edit, etc
 app.put('/articles/edit', (req, res) => {
   console.log('putting', req.body);
-  db.updateArticle(req.body.id, req.body.data, (err, results) => {
+  db.updateArticle(req.body.id, req.body.changes, (err, results) => {
     if (err) {
       console.log('error', err);
+      res.sendStatus(err);
     } else {
+      console.log('updated article, results now', results)
       res.status(200).json(results);
     }
   });

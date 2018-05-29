@@ -83,9 +83,8 @@ export function updateArticle(id, changes, cb) {
   return (dispatch) => {
     axios.put('/articles/edit', { id, changes })
       .then((response) => {
-        console.log('article list after updating this one article', response.data);
         dispatch(updateSearch(response.data, 'updated'));
-        cb()
+        cb();
       })
       .catch((err) => {
         if (err.response.status === 400) {
@@ -94,10 +93,6 @@ export function updateArticle(id, changes, cb) {
           dispatch(handleError('search'));
           cb();
         }
-      })
-  }
-  return ({
-    type: UPDATE_ARTICLE,
-    payload: { id, changes },
-  });
+      });
+  };
 }

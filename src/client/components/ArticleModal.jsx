@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { Modal, Button, Alert, OverlayTrigger, Popover } from 'react-bootstrap';
 
-import { addArticle, deleteArticle } from '../actions/index';
+import { addArticle, deleteArticle, updateArticle } from '../actions/index';
 import ArticleForm from './ArticleForm';
 
 const { Component } = React;
@@ -51,7 +51,6 @@ class ArticleModal extends Component {
   }
 
   saveNew() {
-    // axios request to send post request to save new article
     const newArticle = {
       title: this.state.title,
       author: this.state.author,
@@ -64,31 +63,20 @@ class ArticleModal extends Component {
   }
 
   saveChange() {
-    // axios request to send patch request to save changes to article
-    axios.patch('/articles/edit', {
-      id: this.props.currentArticle._id,
-      data: {
-        title: this.state.title,
-        author: this.state.author,
-        body: this.state.body,
-        lastUpdate: new Date(),
-        tags: this.state.tags,
-      },
-    })
-      .then((response) => {
-        // gotta update the store again
-        // guess we need some match dispatch to props...
-        this.props.getAllArticles(response.data);
-        this.handleClose();
-      })
-      .catch((err) => {
-        console.log('error updating in client', err);
-      });
+    const data = {
+      title: this.state.title,
+      author: this.state.author,
+      body: this.state.body,
+      lastUpdate: new Date(),
+      tags: this.state.tags,
+    };
+    this.props.updateArticle(this.props.currentArticle._id, data, () => {
+      this.handleClose();
+    });
   }
 
   handleDelete() {
     this.props.deleteArticle(this.props.currentArticle._id, () => {
-      console.log('DELETED')
       this.handleClose();
     });
   }
@@ -110,7 +98,7 @@ class ArticleModal extends Component {
     };
 
     const confirmDelete = (
-      <Popover title="Are you sure?">
+      <Popover id="confirm-delete-popover" title="Are you sure?">
         <Button onClick={this.handleDelete} bsStyle="danger"> Delete </Button>
       </Popover>
     )
@@ -152,4 +140,4 @@ const mapStateToProps = state => ({
   error: state.fetch.error,
 });
 
-export default connect(mapStateToProps, { addArticle, deleteArticle })(ArticleModal);
+export default connect(mapStateToProps, { addArticle, deleteArticle, updateArticle })(ArticleModal);

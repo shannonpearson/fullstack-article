@@ -54,6 +54,7 @@ const updateArticle = (articleId, changes, cb) => {
   Article.updateOne({ _id: articleId }, changes, (err, res) => {
     if (err) {
       console.log('error updating article', err);
+      cb(400, null);
     } else {
       console.log(`updated ${res.nModified} articles; changes: `, changes);
       getAllArticlesByDate(cb);
