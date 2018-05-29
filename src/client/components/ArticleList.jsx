@@ -25,15 +25,20 @@ class ArticleList extends React.Component {
   }
 
   updatePage(e) {
-    this.setState({ activePage: e.target.id })
+    this.setState({ activePage: e.target.id });
   }
 
   render() {
-    console.log('PROPS LIST', this.props);
-
     const pages = [];
     for (let i = 1; i <= (this.props.articles.length % 8) + 1; i++) {
-      pages.push(<Pagination.Item id={i} onClick={this.updatePage} key={i} active={i === this.state.activePage}>{i}</Pagination.Item>);
+      pages.push(<Pagination.Item
+          id={i}
+          key={i}
+          active={i === this.state.activePage}
+          onClick={this.updatePage}
+        >
+          {i}
+        </Pagination.Item>,);
     }
 
     const successAlert = () => (
@@ -51,24 +56,13 @@ class ArticleList extends React.Component {
       return (
         <div>
           {this.props.success && successAlert()}
-          {this.props.articles.slice((this.state.activePage - 1) * 8, (this.state.activePage * 8)).map(a => (<ArticlePreview key={a.title} article={a} />))}
-          <Pager>
-            <Pager.Item
-              previous
-              disabled={this.state.activePage === 1}
-              onClick={this.previousPage}
-            >
-              Previous
-            </Pager.Item>
-            <Pager.Item
-              next
-              disabled={this.state.activePage > this.props.articles.length / 8}
-              onClick={this.nextPage}
-            >
-            Next
-            </Pager.Item>
-          </Pager>
-          <Pagination bsSize="medium">{pages}</Pagination>
+          {this.props.articles
+            .slice((this.state.activePage - 1) * 8, (this.state.activePage * 8)).map(a => (
+              <ArticlePreview key={a.title} article={a} />
+            ))}
+          <div style={{ width: 'fit-content', margin: 'auto' }}>
+            <Pagination bsSize="medium" >{pages}</Pagination>
+          </div>
         </div>
       );
     }
