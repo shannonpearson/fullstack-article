@@ -31,14 +31,15 @@ class ArticleList extends React.Component {
   render() {
     const pages = [];
     for (let i = 1; i <= (this.props.articles.length % 8) + 1; i++) {
-      pages.push(<Pagination.Item
+      pages.push(
+        <Pagination.Item
           id={i}
           key={i}
           active={i === this.state.activePage}
           onClick={this.updatePage}
         >
           {i}
-        </Pagination.Item>,);
+        </Pagination.Item>);
     }
 
     const successAlert = () => (

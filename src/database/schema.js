@@ -25,10 +25,10 @@ const articleSchema = mongoose.Schema({
 
 const Article = mongoose.model('Article', articleSchema);
 
-const getAllArticlesByDate = function (cb) {
-  Article.find({}).sort('dateCreated').exec((err, results) => {
+const searchArticlesByTag = (tag, cb) => {
+  const query = tag ? { tags: tag } : {};
+  Article.find(query).sort({ dateCreated: -1 }).exec((err, results) => {
     if (err) {
-      console.log('error getting all articles', err);
       cb(500, null);
     } else {
       cb(null, results);
@@ -43,7 +43,7 @@ const newArticle = (article, cb) => {
     // but also form validation could handle it so there should only ever be a valid article sent
       cb(400, null);
     } else {
-      getAllArticlesByDate(cb);
+      searchArticlesByTag(null, cb);
     }
   });
 };
@@ -54,19 +54,7 @@ const updateArticle = (articleId, changes, cb) => {
       console.log('error updating article', err);
       cb(400, null);
     } else {
-      console.log(`updated ${res.nModified} articles; changes: `, changes);
-      getAllArticlesByDate(cb);
-    }
-  });
-};
-
-const searchArticlesByTag = (tag, cb) => {
-  const query = tag ? { tags: tag } : {};
-  Article.find(query).sort('dateCreated').exec((err, results) => {
-    if (err) {
-      console.log('error searching results in db');
-    } else {
-      cb(results);
+      searchArticlesByTag(null, cb);
     }
   });
 };
@@ -76,13 +64,12 @@ const deleteArticle = (articleId, cb) => {
     if (err) {
       cb(400, null);
     } else {
-      getAllArticlesByDate(cb);
+      searchArticlesByTag(null, cb);
     }
   });
 };
 
 module.exports = {
-  getAllArticlesByDate,
   searchArticlesByTag,
   newArticle,
   updateArticle,

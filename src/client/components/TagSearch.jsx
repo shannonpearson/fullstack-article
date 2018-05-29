@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Form, FormControl, Button, Glyphicon } from 'react-bootstrap';
 
-import { getAllArticles, searchArticles } from '../actions/index';
+import { searchArticles } from '../actions/index';
 
 const { Component } = React;
 
@@ -46,4 +46,4 @@ class TagSearch extends Component {
   }
 }
 
-export default connect(null, { getAllArticles, searchArticles })(TagSearch);
+export default connect(null, { searchArticles })(TagSearch);

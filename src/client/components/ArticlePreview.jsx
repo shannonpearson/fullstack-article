@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Panel, Label } from 'react-bootstrap';
 
 import ArticleModal from './ArticleModal';
-import { getAllArticles, searchArticles } from '../actions/index';
+import { searchArticles } from '../actions/index';
 
 const { Component } = React;
 const {
@@ -61,4 +61,4 @@ class ArticlePreview extends Component {
   }
 }
 
-export default connect(null, { getAllArticles, searchArticles })(ArticlePreview);
+export default connect(null, { searchArticles })(ArticlePreview);
