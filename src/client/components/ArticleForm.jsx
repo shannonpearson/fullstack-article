@@ -126,7 +126,7 @@ class ArticleForm extends Component {
         <Panel>
           <Panel.Body>
             {this.state.tags.map(tag => (
-              <Label key={tag} style={{ marginRight: 10 }}>
+              <Label bsStyle="info" key={tag} style={{ marginRight: 10 }}>
                 {tag}
                 <span
                   tabIndex={Math.floor(Math.random() * 100)}
@@ -136,7 +136,7 @@ class ArticleForm extends Component {
                   onKeyPress={null}
                   style={{ color: 'red', cursor: 'pointer' }}
                 >
-                  x
+                  &nbsp; x
                 </span>
               </Label>
             ))}

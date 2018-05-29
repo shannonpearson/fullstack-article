@@ -41,6 +41,7 @@ class ArticleModal extends Component {
     });
   }
 
+  // updates changed field in state, and validates in state if it's title or body
   handleFormChange(obj) {
     const update = {
       ...obj,
@@ -54,6 +55,7 @@ class ArticleModal extends Component {
     this.setState(update);
   }
 
+  // checks title and body field on submit before dispatching action (callback)
   validateForm(cb) {
     if (this.state.title.length > 0 && this.state.body.length > 0) {
       cb();
@@ -65,6 +67,7 @@ class ArticleModal extends Component {
     }
   }
 
+  // adds new article if valid
   saveNew() {
     this.validateForm(() => {
       this.setState({ loading: 'Adding article...' });
@@ -83,6 +86,7 @@ class ArticleModal extends Component {
     });
   }
 
+  // updates existing article if valid
   saveChange() {
     this.validateForm(() => {
       this.setState({ loading: 'Saving changes...' });
@@ -99,6 +103,7 @@ class ArticleModal extends Component {
     });
   }
 
+  // deletes article
   handleDelete() {
     this.setState({ loading: 'Deleting article...' }, () => {
       this.props.deleteArticle(this.props.currentArticle._id, () => {
@@ -115,9 +120,8 @@ class ArticleModal extends Component {
     );
 
     return (
-
       <div>
-        <Button onClick={this.toggleShow} bsSize="small"> { this.props.currentArticle ? 'Edit/Delete' : 'New' } </Button>
+        <Button onClick={this.toggleShow}> { this.props.currentArticle ? 'Edit/Delete' : 'Add New Article' } </Button>
 
         <Modal show={this.state.show} onHide={this.toggleShow}>
           <Header closeButton>
@@ -138,7 +142,7 @@ class ArticleModal extends Component {
             />
           </Body>
           <Footer>
-            <Button onClick={this.props.currentArticle ? this.saveChange : this.saveNew}> { 'Save' } </Button>
+            <Button bsStyle="info" onClick={this.props.currentArticle ? this.saveChange : this.saveNew}> { 'Save' } </Button>
             <Button onClick={this.toggleShow}> Cancel </Button>
             {this.props.currentArticle && (
               <OverlayTrigger trigger="click" placement="top" overlay={confirmDelete}>

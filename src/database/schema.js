@@ -31,7 +31,7 @@ const Article = mongoose.model('Article', articleSchema);
 // search by tag if provided, otherwise return all articles; sort by most recent
 const searchArticlesByTag = (tag, cb) => {
   const query = tag ? { tags: tag } : {};
-  Article.find(query).sort({ dateCreated: -1 }).exec((err, results) => {
+  Article.find(query).sort({ lastUpdate: -1 }).exec((err, results) => {
     if (err) { // if query fails, return server error
       cb(503, null);
     } else { // otherwise, get all tags from all articles

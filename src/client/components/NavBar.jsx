@@ -7,10 +7,10 @@ import TagSearch from './TagSearch';
 const { Header, Brand } = Navbar;
 
 const NavBar = () => (
-  <Navbar inverse fluid fixedTop>
+  <Navbar fluid fixedTop>
     <Header>
       <Brand>
-        holla
+        <div style={{ marginTop: 7 }}> Hello </div>
       </Brand>
     </Header>
     <Nav>

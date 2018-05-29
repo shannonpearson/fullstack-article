@@ -34,7 +34,7 @@ class ArticleView extends Component {
     const posted = new Date(article.dateCreated);
     const update = new Date(article.lastUpdate);
     return (
-      <Panel defaultExpanded={false} style={{ width: '80%', margin: 'auto', marginTop: 30 }}>
+      <Panel defaultExpanded={false} bsStyle="success" style={{ width: '80%', margin: 'auto', marginTop: 30 }}>
         <Heading>
           <Title componentClass="h3" toggle> { article.title } </Title>
           <div style={{ fontStyle: 'italic' }}> by { article.author } </div>
@@ -53,7 +53,7 @@ class ArticleView extends Component {
               <Label
                 key={tag}
                 id={tag}
-                bsStyle="primary"
+                bsStyle="success"
                 onClick={this.searchTags}
                 style={{ marginRight: 5, cursor: 'pointer' }}
               >

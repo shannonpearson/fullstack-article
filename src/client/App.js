@@ -23,20 +23,4 @@ const App = () => {
   )
 }
 
-// class App extends Component {
-
-//   render() {
-//     const store = createStore(reducers, applyMiddleware(thunk));
-//     return (
-//       <Provider store={store}>
-//         <div>
-//           <NavBar />
-//           <div style={{ height: 70}}/>
-//           <ArticleList/>
-//         </div>
-//       </Provider>
-//     )
-//   }
-// }
-
 export default App;
