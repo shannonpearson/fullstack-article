@@ -19,6 +19,7 @@ class TagSearch extends Component {
     this.onTextChange = this.onTextChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.chooseTag = this.chooseTag.bind(this);
+    this.searchAll = this.searchAll.bind(this);
   }
 
   onTextChange(e) {
@@ -44,6 +45,10 @@ class TagSearch extends Component {
     }
   }
 
+  searchAll() {
+    this.props.searchArticles();
+  }
+
   chooseTag(e) {
     this.setState({
       searchTerm: e.target.id,
@@ -55,6 +60,7 @@ class TagSearch extends Component {
   render() {
     return (
       <Form inline>
+        <Button onClick={this.searchAll} style={{ marginRight: 15 }}> View All </Button>
         <FormControl
           id="searchTerm"
           type="text"
