@@ -86,7 +86,6 @@ const mapStateToProps = state => ({
   loading: state.fetch.isLoading,
   searchError: state.fetch.error === 'search',
   success: state.fetch.success,
-  tags: state.fetch.tags,
 });
 
 export default connect(mapStateToProps, { addArticle, searchArticles })(ArticleList);

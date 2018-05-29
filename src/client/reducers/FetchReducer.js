@@ -14,7 +14,12 @@ const FetchReducer = (state = INITIAL_STATE, action) => {
       return { ...state, isLoading: action.isLoading };
 
     case UPDATE_SEARCH:
-      return { ...state, articles: action.data, success: action.success, tags: action.tags };
+      return {
+        ...state,
+        articles: action.data,
+        success: action.success,
+        tags: action.tags,
+      };
 
     case HANDLE_ERROR:
       return { ...state, error: action.error };

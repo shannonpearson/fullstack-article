@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, FormControl, Button, Glyphicon } from 'react-bootstrap';
+import { Form, FormControl, Button, Glyphicon, Popover, Overlay } from 'react-bootstrap';
+import { startsWith, each } from 'lodash';
 
 import { searchArticles } from '../actions/index';
 
@@ -12,14 +13,24 @@ class TagSearch extends Component {
     super(props);
     this.state = {
       searchTerm: '',
+      filteredResults: [],
+      target: null,
     };
     this.onTextChange = this.onTextChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   onTextChange(e) {
+    const filteredResults = [];
+    each(this.props.tags, (n, key) => {
+      if (startsWith(key, e.target.value)) {
+        filteredResults.push(key);
+      }
+    });
     this.setState({
       searchTerm: e.target.value,
+      filteredResults,
+      target: e.target,
     });
   }
 
@@ -42,10 +53,29 @@ class TagSearch extends Component {
           style={{ width: 200 }}
           bsSize="small"
         />
+        <Overlay
+          show={this.state.filteredResults.length > 0}
+          target={this.state.target}
+          placement="bottom"
+        >
+          <Popover id="filter search popover">
+            <div>
+          {
+                this.state.filteredResults.slice(0, 10).map(tag => (
+                  <div key={tag}> {tag} </div>
+                ))
+              }
+            </div>
+          </Popover>
+        </Overlay>
         <Button onClick={this.onSubmit} bsSize="small"> <Glyphicon glyph="search" /> </Button>
       </Form>
     );
   }
 }
 
-export default connect(null, { searchArticles })(TagSearch);
+const mapStateToProps = state => ({
+  tags: state.fetch.tags,
+});
+
+export default connect(mapStateToProps, { searchArticles })(TagSearch);
