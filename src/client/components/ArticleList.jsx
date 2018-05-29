@@ -31,9 +31,12 @@ class ArticleList extends React.Component {
 
   /* eslint-disable react/jsx-closing-tag-location */
   render() {
-    console.log(this.props)
+    console.log(this.props.articles.length);
+    const numberOfPages = this.props.articles.length % 8 === 0 && this.props.articles.length > 0 ?
+      this.props.articles.length / 8 :
+      Math.ceil((this.props.articles.length / 8));
     const pages = [];
-    for (let i = 1; i <= (this.props.articles.length % 8) + 1; i++) {
+    for (let i = 1; i <= numberOfPages; i++) {
       pages.push(<Pagination.Item
         id={i}
         key={i}
