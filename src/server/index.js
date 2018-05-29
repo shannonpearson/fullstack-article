@@ -11,41 +11,54 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // SERVES STATIC HOMEPAGE
-app.get('/', (req, res) => { // req, res, next (took out next because not used for linter)
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 app.post('/articles/new', (req, res) => {
-  db.newArticle(req.body.article, (err, results) => {
-    if (err) {
-      res.sendStatus(err);
-    } else {
-      res.status(200).json(results);
-    }
-  });
+  if (req.body.article) {
+    db.newArticle(req.body.article, (err, results) => {
+      if (err) {
+        res.sendStatus(err);
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  } else { // return client error if client sent bad request
+    res.sendStatus(400);
+  }
 });
 
 app.put('/articles/edit', (req, res) => {
-  db.updateArticle(req.body.id, req.body.changes, (err, results) => {
-    if (err) {
-      res.sendStatus(err);
-    } else {
-      res.status(200).json(results);
-    }
-  });
+  if (req.body.id && req.body.changes) {
+    db.updateArticle(req.body.id, req.body.changes, (err, results) => {
+      if (err) {
+        res.sendStatus(err);
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  } else {
+    res.sendStatus(400);
+  }
 });
 
 app.delete('/articles/delete', (req, res) => {
-  db.deleteArticle(req.query.id, (err, results) => {
-    if (err) {
-      res.sendStatus(err);
-    } else {
-      res.status(200).json(results);
-    }
-  });
+  if (req.query.id) {
+    db.deleteArticle(req.query.id, (err, results) => {
+      if (err) {
+        res.sendStatus(err);
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  } else {
+    res.sendStatus(400);
+  }
 });
 
 app.get('/articles/search', (req, res) => {
+  // doesn't need an argument because it will find all articles if no tag is provided
   db.searchArticlesByTag(req.query.tag, (err, results) => {
     if (err) {
       res.sendStatus(err);
