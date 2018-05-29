@@ -44,11 +44,9 @@ export function addArticle(article, cb) {
     axios.post('/articles/new', { article })
       .then((response) => {
         dispatch(updateSearch(response.data, 'added'));
-        console.log('adding')
         cb();
       })
       .catch((err) => {
-        console.log('error error', err)
         if (err.response.status === 400) { // error creating article
           dispatch(handleError('added'));
         } else { // 500 error on search
@@ -64,12 +62,10 @@ export function deleteArticle(id, cb) {
   return (dispatch) => {
     axios.delete('/articles/delete', { params: { id } })
       .then((response) => { // response.data = all articles
-        console.log('updated list of articles', response.data)
         dispatch(updateSearch(response.data, 'deleted'));
         cb();
       })
       .catch((err) => {
-        console.log(err.response.status);
         if (err.response.status === 400) {
           dispatch(handleError('delete'));
         } else {

@@ -64,7 +64,6 @@ class ArticleModal extends Component {
         titleValid: this.state.title.length > 0,
         bodyValid: this.state.body.length > 0,
       });
-      console.log('missing fields!');
     }
   }
 

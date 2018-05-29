@@ -66,7 +66,6 @@ const newArticle = (article, cb) => {
 const updateArticle = (articleId, changes, cb) => {
   Article.updateOne({ _id: articleId }, changes, (err) => {
     if (err) {
-      console.log('error updating article', err);
       cb(400, null);
     } else {
       searchArticlesByTag(null, cb);
