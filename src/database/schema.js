@@ -1,4 +1,7 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-prototype-builtins */
 const mongoose = require('mongoose');
+const uniq = require('lodash/uniq');
 
 const uri = 'mongodb://shannon:verb@ds123129.mlab.com:23129/articles';
 // const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/articles';
@@ -25,25 +28,18 @@ const articleSchema = mongoose.Schema({
 
 const Article = mongoose.model('Article', articleSchema);
 
+// search by tag if provided, otherwise return all articles; sort by most recent
 const searchArticlesByTag = (tag, cb) => {
   const query = tag ? { tags: tag } : {};
   Article.find(query).sort({ dateCreated: -1 }).exec((err, results) => {
-    if (err) {
+    if (err) { // if query fails, return server error
       cb(500, null);
-    } else {
+    } else { // otherwise, get all tags from all articles
       Article.find({}, { tags: 1, _id: 0 }, (error, res) => {
-        if (error) {
-          cb(500, null);
-        } else {
-          const tags = {};
-          res.forEach((obj) => {
-            obj.tags.forEach((t) => {
-              if (!tags.hasOwnProperty(t)) {
-                tags[t] = 0;
-              }
-              tags[t]++;
-            });
-          });
+        if (error) { // if tags query fails, still return results but with empty array of tags
+          cb(null, { results, tags: [] });
+        } else { // otherwise return articles and array of all tags
+          const tags = res.reduce((array, obj) => array.concat(obj.tags), []);
           cb(null, { results, tags });
         }
       });
@@ -51,32 +47,35 @@ const searchArticlesByTag = (tag, cb) => {
   });
 };
 
+// add new article record and return updated collection of all articles
 const newArticle = (article, cb) => {
   Article.create(article, (err) => {
-    if (err) { // this should only happen if the article isn't valid to go into the database;
-    // handle cases for both invalid article and valid article but otherwise can't add to db
-    // but also form validation could handle it so there should only ever be a valid article sent
-      cb(400, null);
+    if (err) {
+      /* form validation confirms client sends valid article,
+      so this should only happen if there's a server error */
+      cb(500, null);
     } else {
       searchArticlesByTag(null, cb);
     }
   });
 };
 
+// update existing article record and return updated collection of all articles
 const updateArticle = (articleId, changes, cb) => {
   Article.updateOne({ _id: articleId }, changes, (err) => {
-    if (err) {
-      cb(400, null);
+    if (err) { // form validation and server should confirm valid changes were sent so error is server error
+      cb(500, null);
     } else {
       searchArticlesByTag(null, cb);
     }
   });
 };
 
+// delete article record and return updated collection of all articles
 const deleteArticle = (articleId, cb) => {
   Article.deleteOne({ _id: articleId }, (err) => {
-    if (err) {
-      cb(400, null);
+    if (err) { // server should confirm ID is sent
+      cb(500, null);
     } else {
       searchArticlesByTag(null, cb);
     }
