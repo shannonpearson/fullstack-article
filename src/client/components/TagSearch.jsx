@@ -24,7 +24,9 @@ class TagSearch extends Component {
   }
 
   onSubmit() {
-    this.props.searchArticles(this.state.searchTerm);
+    if (this.state.searchTerm.length > 0) {
+      this.props.searchArticles(this.state.searchTerm);
+    }
   }
 
   render() {
