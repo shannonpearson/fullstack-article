@@ -82,7 +82,6 @@ class ArticlesList extends React.Component {
 const mapStateToProps = state => ({
   articles: state.search.articles,
   loading: state.search.isLoading,
-  searchError: state.search.error === 'search',
   success: state.search.success,
   tags: state.search.tags,
 });
