@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Glyphicon } from 'react-bootstrap';
 
 import ArticleModal from './ArticleModal';
 import TagSearch from './TagSearch';
@@ -10,7 +10,7 @@ const NavBar = () => (
   <Navbar fluid fixedTop>
     <Header>
       <Brand>
-        <div style={{ marginTop: 7 }}> Hello </div>
+        <div style={{ marginTop: 7, color: 'green' }}> <Glyphicon glyph="leaf" /> Hello </div>
       </Brand>
     </Header>
     <Nav>

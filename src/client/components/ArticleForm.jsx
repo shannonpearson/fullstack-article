@@ -22,6 +22,7 @@ class ArticleForm extends Component {
     this.deleteTag = this.deleteTag.bind(this);
   }
 
+  // updates changed value in state (for form view) and passes to modal change handler (for submit)
   handleChange(e) {
     e.persist();
     const update = { [e.target.id]: e.target.value };
@@ -36,7 +37,7 @@ class ArticleForm extends Component {
     if (this.state.newTag.length > 0) {
       const tags = this.state.newTag.split(',').map(tag => trim(tag.toLowerCase()));
       this.setState({
-        tags: this.state.tags.concat(tags),
+        tags: without(this.state.tags.concat(tags), ''),
         newTag: '',
       }, () => {
         this.props.handleChange({ tags: this.state.tags });
@@ -48,18 +49,7 @@ class ArticleForm extends Component {
     this.setState({
       tags: without(this.state.tags, e.target.id),
     }, () => {
-      const {
-        title,
-        author,
-        body,
-        tags,
-      } = this.state;
-      this.props.handleChange({
-        title,
-        author,
-        body,
-        tags,
-      });
+      this.props.handleChange({ tags: this.state.tags });
     });
   }
 
