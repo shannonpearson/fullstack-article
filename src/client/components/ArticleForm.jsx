@@ -3,7 +3,7 @@
 import React from 'react';
 import { without } from 'lodash';
 
-import { form, FormGroup, FormControl, ControlLabel, Panel, Label, Button } from 'react-bootstrap';
+import { form, FormGroup, FormControl, ControlLabel, HelpBlock, Panel, Label, Button } from 'react-bootstrap';
 
 const { Component } = React;
 
@@ -23,21 +23,25 @@ class ArticleForm extends Component {
   }
 
   handleChange(e) {
-    this.setState({
-      [e.target.id]: e.target.value,
-    }, () => {
-      const {
-        title,
-        author,
-        body,
-        tags,
-      } = this.state;
-      this.props.handleChange({
-        title,
-        author,
-        body,
-        tags,
-      });
+    e.persist();
+    const update = { [e.target.id]: e.target.value };
+    this.setState(update, () => {
+      if (e.target.id !== 'newTag') {
+        this.props.handleChange(update)
+      }
+
+      // const {
+      //   title,
+      //   author,
+      //   body,
+      //   tags,
+      // } = this.state;
+      // this.props.handleChange({
+      //   title,
+      //   author,
+      //   body,
+      //   tags,
+      // });
     });
   }
 
@@ -47,7 +51,7 @@ class ArticleForm extends Component {
         tags: this.state.tags.concat([this.state.newTag.toLowerCase()]),
         newTag: '',
       }, () => {
-        this.props.handleChange(this.state);
+        this.props.handleChange({ tags: this.state.tags });
       });
     }
   }
@@ -72,18 +76,43 @@ class ArticleForm extends Component {
   }
 
   render() {
+    const titleValidation = () => {
+      switch (this.props.validTitle) {
+        case true:
+          return 'success';
+        case false:
+          return 'error';
+        default:
+          return null;
+      }
+    };
+
+    const bodyValidation = () => {
+      switch (this.props.validBody) {
+        case true:
+          return 'success';
+        case false:
+          return 'error';
+        default:
+          return null;
+      }
+    }
+
     return (
       <form>
         <FormGroup>
-          <ControlLabel> Title </ControlLabel>
-          <FormControl
-            type="text"
-            id="title"
-            value={this.state.title}
-            placeholder="enter title"
-            onChange={this.handleChange}
-            style={{ marginBottom: 5 }}
-          />
+          <FormGroup validationState={titleValidation()}>
+            <ControlLabel> Title </ControlLabel>
+            <FormControl
+              type="text"
+              id="title"
+              value={this.state.title}
+              placeholder="enter title"
+              onChange={this.handleChange}
+              style={{ marginBottom: 5 }}
+            />
+            {titleValidation() === 'error' && (<HelpBlock> Title is required </HelpBlock>)}
+          </FormGroup>
           <ControlLabel> Author </ControlLabel>
           <FormControl
             type="text"
@@ -93,16 +122,19 @@ class ArticleForm extends Component {
             onChange={this.handleChange}
             style={{ marginBottom: 5 }}
           />
-          <ControlLabel> Article Body </ControlLabel>
-          <FormControl
-            type="text"
-            id="body"
-            componentClass="textarea"
-            value={this.state.body}
-            placeholder="write something cool..."
-            onChange={this.handleChange}
-            style={{ marginBottom: 5 }}
-          />
+          <FormGroup validationState={bodyValidation()}>
+            <ControlLabel> Article Body </ControlLabel>
+            <FormControl
+              type="text"
+              id="body"
+              componentClass="textarea"
+              value={this.state.body}
+              placeholder="write something cool..."
+              onChange={this.handleChange}
+              style={{ marginBottom: 5 }}
+            />
+            {bodyValidation() === 'error' && (<HelpBlock> Article body is required </HelpBlock>)}
+          </FormGroup>
           <ControlLabel> Tags </ControlLabel>
           <FormControl
             type="text"
@@ -117,7 +149,9 @@ class ArticleForm extends Component {
         <Panel>
           <Panel.Body>
             {this.state.tags.map(tag => (
-              <Label key={tag} style={{ marginRight: 10 }}> {tag} <span tabIndex={Math.floor(Math.random() * 100)} id={tag} role="button" onClick={this.deleteTag} onKeyPress={null} style={{ color: 'red', cursor: 'pointer' }}>x</span> </Label>
+              <Label key={tag} style={{ marginRight: 10 }}>
+                {tag} <span tabIndex={Math.floor(Math.random() * 100)} id={tag} role="button" onClick={this.deleteTag} onKeyPress={null} style={{ color: 'red', cursor: 'pointer' }}>x</span>
+              </Label>
             ))}
           </Panel.Body>
         </Panel>

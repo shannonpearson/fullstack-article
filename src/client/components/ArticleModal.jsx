@@ -22,6 +22,8 @@ class ArticleModal extends Component {
       author: this.props.currentArticle ? this.props.currentArticle.author : '',
       body: this.props.currentArticle ? this.props.currentArticle.body : '',
       tags: [],
+      titleValid: null,
+      bodyValid: null,
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -29,48 +31,69 @@ class ArticleModal extends Component {
     this.saveChange = this.saveChange.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.validateForm = this.validateForm.bind(this);
   }
 
   handleClose() {
-    console.log('propssss', this.props);
     this.setState({ show: false });
   }
   // could just do one toggle show method?
   handleShow() {
-    this.setState({ show: true });
+    this.setState({ show: true, titleValid: null, bodyValid: null });
   }
 
   handleFormChange(obj) {
-    this.setState({
-      title: obj.title,
-      author: obj.author,
-      body: obj.body,
-      tags: obj.tags,
-    });
+    const update = {
+      ...obj,
+    };
+    if (obj.hasOwnProperty('title')) {
+      update.titleValid = obj.title.length > 0;
+    }
+    if (obj.hasOwnProperty('body')) {
+      update.bodyValid = obj.body.length > 0;
+    }
+    console.log(update)
+    this.setState(update);
+  }
+
+  validateForm(cb) {
+    if (this.state.titleValid && this.state.bodyValid) {
+      cb();
+    } else {
+      this.setState({
+        titleValid: this.state.title.length > 0,
+        bodyValid: this.state.body.length > 0,
+      });
+      console.log('missing fields!');
+    }
   }
 
   saveNew() {
-    const newArticle = {
-      title: this.state.title,
-      author: this.state.author,
-      body: this.state.body,
-      tags: this.state.tags,
-    };
-    this.props.addArticle(newArticle, () => {
-      this.handleClose();
+    this.validateForm(() => {
+      const newArticle = {
+        title: this.state.title,
+        author: this.state.author,
+        body: this.state.body,
+        tags: this.state.tags,
+      };
+      this.props.addArticle(newArticle, () => {
+        this.handleClose();
+      });
     });
   }
 
   saveChange() {
-    const data = {
-      title: this.state.title,
-      author: this.state.author,
-      body: this.state.body,
-      lastUpdate: new Date(),
-      tags: this.state.tags,
-    };
-    this.props.updateArticle(this.props.currentArticle._id, data, () => {
-      this.handleClose();
+    this.validateForm(() => {
+      const data = {
+        title: this.state.title,
+        author: this.state.author,
+        body: this.state.body,
+        lastUpdate: new Date(),
+        tags: this.state.tags,
+      };
+      this.props.updateArticle(this.props.currentArticle._id, data, () => {
+        this.handleClose();
+      });
     });
   }
 
@@ -118,6 +141,8 @@ class ArticleModal extends Component {
             <ArticleForm
               currentArticle={this.props.currentArticle}
               handleChange={this.handleFormChange}
+              validTitle={this.state.titleValid}
+              validBody={this.state.bodyValid}
             />
           </Body>
           <Footer>
