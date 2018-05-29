@@ -10,8 +10,9 @@ const loading = isLoading => ({
 
 const updateSearch = (data, success) => ({
   type: UPDATE_SEARCH,
-  data,
+  data: data.results,
   success,
+  tags: data.tags,
 });
 
 const handleError = error => ({

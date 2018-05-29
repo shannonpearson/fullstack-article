@@ -31,7 +31,22 @@ const searchArticlesByTag = (tag, cb) => {
     if (err) {
       cb(500, null);
     } else {
-      cb(null, results);
+      Article.find({}, { tags: 1, _id: 0 }, (error, res) => {
+        if (error) {
+          cb(500, null);
+        } else {
+          const tags = {};
+          res.forEach((obj) => {
+            obj.tags.forEach((t) => {
+              if (!tags.hasOwnProperty(t)) {
+                tags[t] = 0;
+              }
+              tags[t]++;
+            });
+          });
+          cb(null, { results, tags });
+        }
+      });
     }
   });
 };
@@ -49,7 +64,7 @@ const newArticle = (article, cb) => {
 };
 
 const updateArticle = (articleId, changes, cb) => {
-  Article.updateOne({ _id: articleId }, changes, (err, res) => {
+  Article.updateOne({ _id: articleId }, changes, (err) => {
     if (err) {
       console.log('error updating article', err);
       cb(400, null);

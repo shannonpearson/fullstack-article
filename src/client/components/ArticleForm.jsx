@@ -34,10 +34,7 @@ class ArticleForm extends Component {
 
   handleAddTag() {
     if (this.state.newTag.length > 0) {
-      const tags = this.state.newTag.split(',').map((tag) => {
-        return trim(tag.toLowerCase());
-      }); 
-      console.log('adding tags', tags)
+      const tags = this.state.newTag.split(',').map(tag => trim(tag.toLowerCase()));
       this.setState({
         tags: this.state.tags.concat(tags),
         newTag: '',
@@ -131,11 +128,11 @@ class ArticleForm extends Component {
             type="text"
             id="newTag"
             value={this.state.newTag}
-            placeholder="enter tag"
+            placeholder="enter tags, one at a time or separated by commas"
             onChange={this.handleChange}
             style={{ marginBottom: 5 }}
           />
-          <Button onClick={this.handleAddTag}> Add Tag </Button>
+          <Button onClick={this.handleAddTag}> Add Tags </Button>
         </FormGroup>
         <Panel>
           <Panel.Body>

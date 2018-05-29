@@ -31,6 +31,7 @@ class ArticleList extends React.Component {
 
   /* eslint-disable react/jsx-closing-tag-location */
   render() {
+    console.log(this.props)
     const pages = [];
     for (let i = 1; i <= (this.props.articles.length % 8) + 1; i++) {
       pages.push(<Pagination.Item
@@ -85,6 +86,7 @@ const mapStateToProps = state => ({
   loading: state.fetch.isLoading,
   searchError: state.fetch.error === 'search',
   success: state.fetch.success,
+  tags: state.fetch.tags,
 });
 
 export default connect(mapStateToProps, { addArticle, searchArticles })(ArticleList);
