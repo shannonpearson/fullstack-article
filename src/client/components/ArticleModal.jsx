@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types, class-methods-use-this, no-underscore-dangle */
+/* eslint-disable no-prototype-builtins */
 
 import React from 'react';
 import { connect } from 'react-redux';
@@ -52,7 +53,6 @@ class ArticleModal extends Component {
     if (obj.hasOwnProperty('body')) {
       update.bodyValid = obj.body.length > 0;
     }
-    console.log(update)
     this.setState(update);
   }
 

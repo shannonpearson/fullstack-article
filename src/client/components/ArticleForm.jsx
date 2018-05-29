@@ -27,21 +27,8 @@ class ArticleForm extends Component {
     const update = { [e.target.id]: e.target.value };
     this.setState(update, () => {
       if (e.target.id !== 'newTag') {
-        this.props.handleChange(update)
+        this.props.handleChange(update);
       }
-
-      // const {
-      //   title,
-      //   author,
-      //   body,
-      //   tags,
-      // } = this.state;
-      // this.props.handleChange({
-      //   title,
-      //   author,
-      //   body,
-      //   tags,
-      // });
     });
   }
 
@@ -96,7 +83,7 @@ class ArticleForm extends Component {
         default:
           return null;
       }
-    }
+    };
 
     return (
       <form>

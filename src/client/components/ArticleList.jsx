@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
+/* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Alert, Pagination, Pager } from 'react-bootstrap';
+import { Alert, Pagination } from 'react-bootstrap';
 
 import ArticlePreview from './ArticlePreview';
 import { addArticle, searchArticles } from '../actions/index';
@@ -28,19 +29,20 @@ class ArticleList extends React.Component {
     this.setState({ activePage: e.target.id });
   }
 
+  /* eslint-disable react/jsx-closing-tag-location */
   render() {
     const pages = [];
     for (let i = 1; i <= (this.props.articles.length % 8) + 1; i++) {
-      pages.push(
-        <Pagination.Item
-          id={i}
-          key={i}
-          active={i === this.state.activePage}
-          onClick={this.updatePage}
-        >
-          {i}
-        </Pagination.Item>);
+      pages.push(<Pagination.Item
+        id={i}
+        key={i}
+        active={i === this.state.activePage}
+        onClick={this.updatePage}
+      >
+        {i}
+      </Pagination.Item>);
     }
+    /* eslint-enable react/jsx-closing-tag-location */
 
     const successAlert = () => (
       <Alert bsStyle="success" style={{ width: '80%', margin: 'auto' }}> Successfully { this.props.success } article! </Alert>
