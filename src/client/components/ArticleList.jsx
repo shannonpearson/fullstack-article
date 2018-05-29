@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Alert } from 'react-bootstrap';
+import { Alert, Pagination, Pager } from 'react-bootstrap';
 
 import ArticlePreview from './ArticlePreview';
 import { addArticle, searchArticles } from '../actions/index';
@@ -12,19 +12,29 @@ import { addArticle, searchArticles } from '../actions/index';
 // wrap in app or something to update store so we can leave this as a dumb componennt maybe
 
 class ArticleList extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     success: null;
-  //   }
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      activePage: 1,
+    };
+    this.updatePage = this.updatePage.bind(this);
+  }
 
   componentWillMount() {
     this.props.searchArticles();
   }
 
+  updatePage(e) {
+    this.setState({ activePage: e.target.id })
+  }
+
   render() {
     console.log('PROPS LIST', this.props);
+
+    const pages = [];
+    for (let i = 1; i <= (this.props.articles.length % 8) + 1; i++) {
+      pages.push(<Pagination.Item id={i} onClick={this.updatePage} key={i} active={i === this.state.activePage}>{i}</Pagination.Item>);
+    }
 
     const successAlert = () => (
       <Alert bsStyle="success" style={{ width: '80%', margin: 'auto' }}> Successfully { this.props.success } article! </Alert>
@@ -41,7 +51,24 @@ class ArticleList extends React.Component {
       return (
         <div>
           {this.props.success && successAlert()}
-          {this.props.articles.map(a => (<ArticlePreview key={a.title} article={a} />))}
+          {this.props.articles.slice((this.state.activePage - 1) * 8, (this.state.activePage * 8)).map(a => (<ArticlePreview key={a.title} article={a} />))}
+          <Pager>
+            <Pager.Item
+              previous
+              disabled={this.state.activePage === 1}
+              onClick={this.previousPage}
+            >
+              Previous
+            </Pager.Item>
+            <Pager.Item
+              next
+              disabled={this.state.activePage > this.props.articles.length / 8}
+              onClick={this.nextPage}
+            >
+            Next
+            </Pager.Item>
+          </Pager>
+          <Pagination bsSize="medium">{pages}</Pagination>
         </div>
       );
     }
