@@ -1,6 +1,6 @@
 // import ReduxThunk from 'redux-thunk';
 import axios from 'axios';
-import { IS_LOADING, UPDATE_SEARCH, HANDLE_ERROR, DELETE_ARTICLE, UPDATE_ARTICLE } from './types';
+import { IS_LOADING, UPDATE_SEARCH, HANDLE_ERROR } from './types';
 
 
 const loading = isLoading => ({

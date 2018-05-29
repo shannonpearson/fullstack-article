@@ -28,7 +28,6 @@ class TagSearch extends Component {
   }
 
   render() {
-    // console.log('PROPS', this.props)
     return (
       <Form inline>
         <FormControl

@@ -9,6 +9,7 @@ import reducers from './reducers/index';
 import NavBar from './components/NavBar';
 import ArticleList from './components/ArticleList';
 
+// could this be totally dumn???
 class App extends Component {
 
   render() {

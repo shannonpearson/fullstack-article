@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types, class-methods-use-this, no-underscore-dangle */
 
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 
 import { Modal, Button, Alert, OverlayTrigger, Popover } from 'react-bootstrap';
@@ -15,7 +14,7 @@ const {
 } = Modal;
 
 class ArticleModal extends Component {
-  constructor(props) { // props should include article _id
+  constructor(props) {
     super(props);
     this.state = {
       show: false,
@@ -101,7 +100,7 @@ class ArticleModal extends Component {
       <Popover id="confirm-delete-popover" title="Are you sure?">
         <Button onClick={this.handleDelete} bsStyle="danger"> Delete </Button>
       </Popover>
-    )
+    );
 
     return (
 

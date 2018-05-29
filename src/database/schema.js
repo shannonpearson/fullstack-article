@@ -21,7 +21,7 @@ const articleSchema = mongoose.Schema({
   tags: Array,
 });
 
-  // add methods here, before compiling with model
+// add methods BEFORE compiling with model
 
 const Article = mongoose.model('Article', articleSchema);
 
@@ -45,12 +45,10 @@ const newArticle = (article, cb) => {
     } else {
       getAllArticlesByDate(cb);
     }
-  }); // article should have all fields (title, author, body, tags)
-  // need to search articles again
+  });
 };
 
 const updateArticle = (articleId, changes, cb) => {
-  // article should have all fields to UPDATE, plus _id as id
   Article.updateOne({ _id: articleId }, changes, (err, res) => {
     if (err) {
       console.log('error updating article', err);
@@ -64,7 +62,6 @@ const updateArticle = (articleId, changes, cb) => {
 
 const searchArticlesByTag = (tag, cb) => {
   const query = tag ? { tags: tag } : {};
-  // filters is an object with db parameters to search (e..g title)
   Article.find(query).sort('dateCreated').exec((err, results) => {
     if (err) {
       console.log('error searching results in db');
@@ -83,11 +80,6 @@ const deleteArticle = (articleId, cb) => {
     }
   });
 };
-
-// instance: const article = new Article({ title: 'some string', author: 'some name string', etc. })
-// could add method to find same author, probably same tags?
-// maybe do a separate method for both of those tho
-
 
 module.exports = {
   getAllArticlesByDate,

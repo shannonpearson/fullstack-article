@@ -15,9 +15,9 @@ const {
 class ArticlePreview extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    //   expandView: false,
-    };
+    // this.state = {
+    // //   expandView: false,
+    // };
     this.searchTags = this.searchTags.bind(this);
   }
 

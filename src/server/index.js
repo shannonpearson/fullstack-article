@@ -10,10 +10,6 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// if (process.env.NODE_ENV === 'production') {
-//   app.use('/static', express.static((path.join(__dirname, 'dist')));
-// }
-
 // SERVES STATIC HOMEPAGE
 app.get('/', (req, res) => { // req, res, next (took out next because not used for linter)
   res.sendFile(path.join(__dirname, '../client/index.html'));
@@ -39,15 +35,12 @@ app.post('/articles/new', (req, res) => {
   });
 });
 
-// probably update urls to /article/edit, etc
 app.put('/articles/edit', (req, res) => {
   console.log('putting', req.body);
   db.updateArticle(req.body.id, req.body.changes, (err, results) => {
     if (err) {
-      console.log('error', err);
       res.sendStatus(err);
     } else {
-      console.log('updated article, results now', results)
       res.status(200).json(results);
     }
   });
@@ -69,7 +62,6 @@ app.get('/articles/search', (req, res) => {
   });
 });
 
-// app.use(express.static(path.join(__dirname)));
 
 app.listen(process.env.PORT || 8000, () => {
   console.log('Server running osn port 8000.\nKeep "yarn wds" running in an other terminal.');

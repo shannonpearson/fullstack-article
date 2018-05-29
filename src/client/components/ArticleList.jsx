@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Alert } from 'react-bootstrap';
 
 import ArticlePreview from './ArticlePreview';
-import { getAllArticles, addArticle, searchArticles } from '../actions/index';
+import { addArticle, searchArticles } from '../actions/index';
 
 // going to make this stateful for the sake of getting redux up but should probably
 // wrap in app or something to update store so we can leave this as a dumb componennt maybe
@@ -36,7 +36,7 @@ class ArticleList extends React.Component {
         <div>
           { this.props.success && successAlert() }
           <div style={{ textAlign: 'center' }}> Loading... </div>;
-        </div>)
+        </div>);
     } else if (this.props.articles.length > 0) {
       return (
         <div>
@@ -62,6 +62,4 @@ const mapStateToProps = state => ({
   success: state.fetch.success,
 });
 
-export default connect(mapStateToProps, {
-  getAllArticles, addArticle, searchArticles,
-})(ArticleList);
+export default connect(mapStateToProps, { addArticle, searchArticles })(ArticleList);
