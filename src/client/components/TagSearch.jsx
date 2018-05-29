@@ -60,7 +60,7 @@ class TagSearch extends Component {
   render() {
     return (
       <Form inline>
-        <Button onClick={this.searchAll} style={{ marginRight: 15 }}> View All </Button>
+        <Button onClick={this.searchAll} style={{ marginRight: 15 }}> View All Articles </Button>
         <FormControl
           id="searchTerm"
           type="text"

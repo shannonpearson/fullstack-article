@@ -34,7 +34,7 @@ export function searchArticles(tag) {
         dispatch(updateSearch(data, null));
       })
       .catch(() => {
-        dispatch(handleError('search'));
+        dispatch(handleError('searching'));
       });
   };
 }
@@ -48,9 +48,9 @@ export function addArticle(article, cb) {
       })
       .catch((err) => {
         if (err.response.status === 400) { // error creating article
-          dispatch(handleError('added'));
+          dispatch(handleError('adding'));
         } else { // 500 error on search
-          dispatch(handleError('search'));
+          dispatch(handleError('searching'));
           // call callback to close modal because create article was successful
           cb();
         }
@@ -67,9 +67,9 @@ export function deleteArticle(id, cb) {
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          dispatch(handleError('delete'));
+          dispatch(handleError('deleting'));
         } else {
-          dispatch(handleError('search'));
+          dispatch(handleError('searching'));
           cb();
         }
       });
@@ -85,9 +85,9 @@ export function updateArticle(id, changes, cb) {
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          dispatch(handleError('delete'));
+          dispatch(handleError('deleting'));
         } else {
-          dispatch(handleError('search'));
+          dispatch(handleError('searching'));
           cb();
         }
       });

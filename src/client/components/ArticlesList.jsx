@@ -36,12 +36,22 @@ class ArticlesList extends React.Component {
     });
   }
 
-  /* eslint-disable react/jsx-closing-tag-location */
   render() {
-    const numberOfPages = this.props.articles.length === 0 ?
-      1 : Math.ceil((this.props.articles.length / 8));
+    const { length } = this.props.articles;
+
+    const successAlert = () => (
+      <Alert
+        bsStyle="success"
+        onDismiss={this.dismissAlert}
+        style={{ width: '80%', margin: 'auto' }}
+      >
+      Successfully { this.state.success } article!
+      </Alert>
+    );
+
+    /* eslint-disable react/jsx-closing-tag-location */
     const pages = [];
-    for (let i = 1; i <= numberOfPages; i++) {
+    for (let i = 1; i <= Math.ceil((length / 8)); i++) {
       pages.push(<Pagination.Item
         id={i}
         key={i}
@@ -51,43 +61,27 @@ class ArticlesList extends React.Component {
         {i}
       </Pagination.Item>);
     }
-
     /* eslint-enable react/jsx-closing-tag-location */
-    const successAlert = () => (
-      <Alert
-        bsStyle="success"
-        onDismiss={this.dismissAlert}
-        style={{ width: '80%', margin: 'auto' }}
-      >
-        Successfully { this.state.success } article!
-      </Alert>
-    );
-    // definitely refactor this render!
 
-    if (this.props.loading) {
-      return (
-        <div>
-          { this.state.success && successAlert() }
-          <div style={{ textAlign: 'center' }}> Loading... </div>;
-        </div>);
-    } else if (this.props.articles.length > 0) {
-      return (
-        <div>
-          {this.state.success && successAlert()}
-          {this.props.articles
-            .slice((this.state.activePage - 1) * 8, (this.state.activePage * 8)).map(a => (
-              <ArticleView key={a.title} article={a} />
-            ))}
-          <div style={{ width: 'fit-content', margin: 'auto' }}>
-            <Pagination bsSize="medium" >{pages}</Pagination>
-          </div>
-        </div>
-      );
-    }
     return (
       <div>
         {this.state.success && successAlert()}
-        <Alert bsStyle="warning" style={{ width: '80%', margin: 'auto' }}> No articles found :/ </Alert>
+        {this.props.loading && <div style={{ textAlign: 'center' }}> Loading... </div>}
+        {length ?
+          (
+            <div>
+              {this.props.articles
+                .slice((this.state.activePage - 1) * 8, (this.state.activePage * 8)).map(a => (
+                  <ArticleView key={a.title} article={a} />
+                ))}
+              <div style={{ width: 'fit-content', margin: 'auto' }}>
+                <Pagination bsSize="medium" >{pages}</Pagination>
+              </div>
+            </div>
+          ) : this.props.loading || (
+            <Alert bsStyle="warning" style={{ width: '80%', margin: 'auto' }}> No articles found :/ </Alert>
+          )
+        }
       </div>
     );
   }

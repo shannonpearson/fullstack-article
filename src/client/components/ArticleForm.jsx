@@ -64,19 +64,24 @@ class ArticleForm extends Component {
   }
 
   render() {
-    const titleValidation = () => {
-      switch (this.props.validTitle) {
-        case true:
-          return 'success';
-        case false:
-          return 'error';
-        default:
-          return null;
-      }
-    };
+    // const titleValidation = () => {
+    //   switch (this.props.validTitle) {
+    //     case true:
+    //       return 'success';
+    //     case false:
+    //       return 'error';
+    //     default:
+    //       return null;
+    //   }
+    // };
 
-    const bodyValidation = () => {
-      switch (this.props.validBody) {
+    // const bodyValidation = () => {
+    //   switch (this.props.validBody) {
+    //   }
+    // };
+    
+    const validate = (field) => {
+      switch (this.props[field]) {
         case true:
           return 'success';
         case false:
@@ -84,12 +89,12 @@ class ArticleForm extends Component {
         default:
           return null;
       }
-    };
+    }
 
     return (
       <form>
         <FormGroup>
-          <FormGroup validationState={titleValidation()}>
+          <FormGroup validationState={validate('validTitle')}>
             <ControlLabel> Title </ControlLabel>
             <FormControl
               type="text"
@@ -99,29 +104,29 @@ class ArticleForm extends Component {
               onChange={this.handleChange}
               style={{ marginBottom: 5 }}
             />
-            {titleValidation() === 'error' && (<HelpBlock> Title is required </HelpBlock>)}
+            {validate('validTitle') === 'error' && (<HelpBlock> Title is required </HelpBlock>)}
           </FormGroup>
           <ControlLabel> Author </ControlLabel>
           <FormControl
             type="text"
             id="author"
             value={this.state.author}
-            placeholder="who u?"
+            placeholder="leave blank for 'Anonymous'"
             onChange={this.handleChange}
             style={{ marginBottom: 5 }}
           />
-          <FormGroup validationState={bodyValidation()}>
+          <FormGroup validationState={validate('validBody')}>
             <ControlLabel> Article Body </ControlLabel>
             <FormControl
               type="text"
               id="body"
               componentClass="textarea"
               value={this.state.body}
-              placeholder="write something cool..."
+              placeholder="write something interesting..."
               onChange={this.handleChange}
               style={{ marginBottom: 5 }}
             />
-            {bodyValidation() === 'error' && (<HelpBlock> Article body is required </HelpBlock>)}
+            {validate('validBody') === 'error' && (<HelpBlock> Article body is required </HelpBlock>)}
           </FormGroup>
           <ControlLabel> Tags </ControlLabel>
           <FormControl
