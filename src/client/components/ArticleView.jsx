@@ -12,7 +12,7 @@ const {
   Heading, Title, Body, Footer, Collapse,
 } = Panel;
 
-class ArticlePreview extends Component {
+class ArticleView extends Component {
   constructor(props) {
     super(props);
     // this.state = {
@@ -61,4 +61,4 @@ class ArticlePreview extends Component {
   }
 }
 
-export default connect(null, { searchArticles })(ArticlePreview);
+export default connect(null, { searchArticles })(ArticleView);

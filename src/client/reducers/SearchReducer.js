@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   tags: {},
 };
 
-const FetchReducer = (state = INITIAL_STATE, action) => {
+const SearchReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case IS_LOADING:
       return { ...state, isLoading: action.isLoading };
@@ -29,4 +29,4 @@ const FetchReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default FetchReducer;
+export default SearchReducer;

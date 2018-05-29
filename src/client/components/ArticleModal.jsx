@@ -160,7 +160,7 @@ class ArticleModal extends Component {
 }
 
 const mapStateToProps = state => ({
-  error: state.fetch.error,
+  error: state.search.error,
 });
 
 export default connect(mapStateToProps, { addArticle, deleteArticle, updateArticle })(ArticleModal);

@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, FormControl, Button, Glyphicon, Popover, Overlay } from 'react-bootstrap';
-import { startsWith, each } from 'lodash';
+import { startsWith } from 'lodash';
 
 import { searchArticles } from '../actions/index';
 
@@ -18,15 +18,15 @@ class TagSearch extends Component {
     };
     this.onTextChange = this.onTextChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.chooseTag = this.chooseTag.bind(this);
     this.searchAll = this.searchAll.bind(this);
+    this.chooseTag = this.chooseTag.bind(this);
   }
 
   onTextChange(e) {
     const filteredResults = [];
-    each(this.props.tags, (n, key) => {
-      if (startsWith(key, e.target.value)) {
-        filteredResults.push(key);
+    this.props.tags.forEach((tag) => {
+      if (startsWith(tag, e.target.value)) {
+        filteredResults.push(tag);
       }
     });
     this.setState({
@@ -91,7 +91,7 @@ class TagSearch extends Component {
 }
 
 const mapStateToProps = state => ({
-  tags: state.fetch.tags,
+  tags: state.search.tags,
 });
 
 export default connect(mapStateToProps, { searchArticles })(TagSearch);

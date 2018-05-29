@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Alert, Pagination } from 'react-bootstrap';
 
-import ArticlePreview from './ArticlePreview';
+import ArticleView from './ArticleView';
 import { addArticle, searchArticles } from '../actions/index';
 
 // going to make this stateful for the sake of getting redux up but should probably
@@ -16,8 +16,10 @@ class ArticleList extends React.Component {
     super(props);
     this.state = {
       activePage: 1,
+      success: this.props.success,
     };
     this.updatePage = this.updatePage.bind(this);
+    this.dismissAlert = this.dismissAlert.bind(this);
   }
 
   componentWillMount() {
@@ -26,6 +28,12 @@ class ArticleList extends React.Component {
 
   updatePage(e) {
     this.setState({ activePage: e.target.id });
+  }
+
+  dismissAlert() {
+    this.setState({
+      success: null,
+    });
   }
 
   /* eslint-disable react/jsx-closing-tag-location */
@@ -46,23 +54,29 @@ class ArticleList extends React.Component {
 
     /* eslint-enable react/jsx-closing-tag-location */
     const successAlert = () => (
-      <Alert bsStyle="success" style={{ width: '80%', margin: 'auto' }}> Successfully { this.props.success } article! </Alert>
+      <Alert
+        bsStyle="success"
+        onDismiss={this.dismissAlert}
+        style={{ width: '80%', margin: 'auto' }}
+      >
+        Successfully { this.state.success } article!
+      </Alert>
     );
     // definitely refactor this render!
 
     if (this.props.loading) {
       return (
         <div>
-          { this.props.success && successAlert() }
+          { this.state.success && successAlert() }
           <div style={{ textAlign: 'center' }}> Loading... </div>;
         </div>);
     } else if (this.props.articles.length > 0) {
       return (
         <div>
-          {this.props.success && successAlert()}
+          {this.state.success && successAlert()}
           {this.props.articles
             .slice((this.state.activePage - 1) * 8, (this.state.activePage * 8)).map(a => (
-              <ArticlePreview key={a.title} article={a} />
+              <ArticleView key={a.title} article={a} />
             ))}
           <div style={{ width: 'fit-content', margin: 'auto' }}>
             <Pagination bsSize="medium" >{pages}</Pagination>
@@ -72,7 +86,7 @@ class ArticleList extends React.Component {
     }
     return (
       <div>
-        {this.props.success && successAlert()}
+        {this.state.success && successAlert()}
         <Alert bsStyle="warning" style={{ width: '80%', margin: 'auto' }}> No articles found :/ </Alert>
       </div>
     );
@@ -81,11 +95,11 @@ class ArticleList extends React.Component {
 
 
 const mapStateToProps = state => ({
-  articles: state.fetch.articles,
-  loading: state.fetch.isLoading,
-  searchError: state.fetch.error === 'search',
-  success: state.fetch.success,
-  tags: state.fetch.tags,
+  articles: state.search.articles,
+  loading: state.search.isLoading,
+  searchError: state.search.error === 'search',
+  success: state.search.success,
+  tags: state.search.tags,
 });
 
 export default connect(mapStateToProps, { addArticle, searchArticles })(ArticleList);
