@@ -45,15 +45,15 @@ class ArticlePreview extends Component {
         <Collapse>
           <Body>
             { article.body }
-            <div> Posted: { posted.toLocaleDateString('en-US', dateOptions) } </div>
+            <div style={{ fontStyle: 'italic' }}> Posted: { posted.toLocaleDateString('en-US', dateOptions) } </div>
             { posted === update ||
-              <div> Last updated: { update.toLocaleDateString('en-US', dateOptions) } </div>
+              <div style={{ fontStyle: 'italic', marginBottom: 5 }}> Last updated: { update.toLocaleDateString('en-US', dateOptions) } </div>
+            }
+            { article.tags.map(tag => (<Label key={tag} id={tag} bsStyle="primary" onClick={this.searchTags} style={{ marginRight: 5, cursor: 'pointer' }}> {tag} </Label>))
             }
           </Body>
           <Footer>
-            { article.tags.map(tag => (<Label key={tag} id={tag} bsStyle="primary" onClick={this.searchTags} style={{ marginRight: 5, cursor: 'pointer' }}> {tag} </Label>))
-            }
-            <ArticleModal currentArticle={article} style={{ marginTop: 20 }} />
+            <ArticleModal currentArticle={article} />
           </Footer>
         </Collapse>
       </Panel>

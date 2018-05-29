@@ -3,7 +3,6 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { Alert, Pagination } from 'react-bootstrap';
 
 import ArticlePreview from './ArticlePreview';
@@ -44,12 +43,11 @@ class ArticleList extends React.Component {
         {i}
       </Pagination.Item>);
     }
-    /* eslint-enable react/jsx-closing-tag-location */
 
+    /* eslint-enable react/jsx-closing-tag-location */
     const successAlert = () => (
       <Alert bsStyle="success" style={{ width: '80%', margin: 'auto' }}> Successfully { this.props.success } article! </Alert>
     );
-
     // definitely refactor this render!
 
     if (this.props.loading) {
@@ -87,6 +85,7 @@ const mapStateToProps = state => ({
   loading: state.fetch.isLoading,
   searchError: state.fetch.error === 'search',
   success: state.fetch.success,
+  tags: state.fetch.tags,
 });
 
 export default connect(mapStateToProps, { addArticle, searchArticles })(ArticleList);
