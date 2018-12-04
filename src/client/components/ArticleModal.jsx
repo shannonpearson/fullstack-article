@@ -105,11 +105,16 @@ class ArticleModal extends Component {
 
   // deletes article
   handleDelete() {
-    this.setState({ loading: 'Deleting article...' }, () => {
-      this.props.deleteArticle(this.props.currentArticle._id, () => {
-        this.toggleShow();
-      });
-    });
+    // this.setState({ loading: 'Deleting article...' }, () => {
+    //   this.props.deleteArticle(this.props.currentArticle._id, () => {
+    //     this.toggleShow();
+    //   });
+    // });
+    try {
+      console.log(nonsense);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   render() {

@@ -50,15 +50,16 @@ const searchArticlesByTag = (tag, cb) => {
 
 // add new article record and return updated collection of all articles
 const newArticle = (article, cb) => {
-  Article.create(article, (err) => {
-    if (err) {
-      /* form validation confirms client sends valid article,
-      so this should only happen if there's a server error */
-      cb(500, null);
-    } else {
-      searchArticlesByTag(null, cb);
-    }
-  });
+  // Article.create(article, (err) => {
+  //   if (err) {
+  //     /* form validation confirms client sends valid article,
+  //     so this should only happen if there's a server error */
+  //     cb(500, null);
+  //   } else {
+  //     searchArticlesByTag(null, cb);
+  //   }
+  // });
+  cb(500, null);
 };
 
 // update existing article record and return updated collection of all articles
